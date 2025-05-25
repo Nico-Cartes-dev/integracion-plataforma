@@ -84,7 +84,7 @@ def ficha(request, id):
             data["mesg"] = "¡Para poder comprar debe iniciar sesión como cliente!"
 
     producto = Producto.objects.annotate(
-        cantidad=round(
+        cantidad=Count(
             'stockproducto__idprod',
             filter=Q(stockproducto__nrofac__isnull=True)
         ),
@@ -227,14 +227,39 @@ def registrar_usuario(request):
     if request.method == 'POST':
         form = RegistrarUsuarioForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            rut = request.POST.get("rut")
-            tipousu = request.POST.get("tipousu")
-            dirusu = request.POST.get("dirusu")
-            PerfilUsuario.objects.update_or_create(user=user, rut=rut, tipousu=tipousu, dirusu=dirusu)
-            return redirect(iniciar_sesion)
-    form = RegistrarUsuarioForm()
-    return render(request, "core/registrar_usuario.html", context={'form': form})
+            try:
+                # Crear usuario pero no guardarlo aún
+                user = form.save(commit=False)
+                # Asegurarse que el usuario sea un cliente normal
+                user.is_staff = False
+                user.is_superuser = False
+                user.save()
+
+                # Crear perfil de usuario
+                rut = request.POST.get("rut")
+                dirusu = request.POST.get("dirusu")
+                
+                tipousu = "Cliente"
+
+                PerfilUsuario.objects.create(
+                    user=user,
+                    rut=rut,
+                    tipousu=tipousu,
+                    dirusu=dirusu
+                )
+ 
+                return redirect(iniciar_sesion)
+            except Exception as e:
+                if user.pk:
+                    user.delete()
+                form.add_error(None, f"Error al registrar usuario: {str(e)}")
+    else:
+        form = RegistrarUsuarioForm()
+    
+    return render(request, "core/registrar_usuario.html", {
+        'form': form,
+        'titulo': 'Registro de Cliente Nuevo'
+    })
 
 def perfil_usuario(request):
     data = {"mesg": "", "form": PerfilUsuarioForm}
@@ -294,6 +319,7 @@ def equipos_bodega(request):
     ).order_by('idprod')
 
     productos_list = list(productos)
+    print(productos_list)
     
     return JsonResponse({'productos': productos_list})
 
@@ -304,7 +330,7 @@ def tienda(request):
     exchange_rate = get_exchange_clp_usd()
     if exchange_rate is None:
         exchange_rate = 942.9500  
-        logger.warning("Using fallback exchange rate: 942.9500")
+        logger.warning(f"Using fallback exchange rate: {exchange_rate}")
 
     
     productos = Producto.objects.annotate(
@@ -335,6 +361,8 @@ def tienda(request):
         }
         for producto in productos
     ]
+    # ? print(productos_with_usd)
+    
 
     return render(request, 'core/tienda.html', {
         'productos': productos_with_usd,
