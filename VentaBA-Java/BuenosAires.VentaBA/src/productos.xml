@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ArrayOfProducto>
+    <Producto>
+        <idprod>1</idprod>
+        <nomprod>Aire Split 9000 BTU</nomprod>
+        <descprod>Frío/Calor</descprod>
+        <precio>259990</precio>
+        <imagen>imagen1.jpg</imagen>
+    </Producto>
+    <Producto>
+        <idprod>2</idprod>
+        <nomprod>Aire Split 12000 BTU</nomprod>
+        <descprod>Solo Frío</descprod>
+        <precio>289990</precio>
+        <imagen>imagen2.jpg</imagen>
+    </Producto>
+</ArrayOfProducto>
