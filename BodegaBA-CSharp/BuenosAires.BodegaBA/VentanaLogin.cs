@@ -23,15 +23,25 @@ namespace BuenosAires.VentaBA
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            /*
-             * Codigo agregado por Tomás (para importarlo en el nuevo front que se vaya a crear o utilizar)
-             */
-            if (.Text.Trim() == "")
+     
+            if (txtCuenta.Text.Trim() == "")
             {
-
+                this.MensajeInfo("Debe ingresar una cuenta");
+                return;
             }
-            new VentanaProducto("Carlos Reyes", "Bodeguero").Show();
-            Hide();
+            if (txtPassword.Text.Trim() == "")
+            {
+                this.MensajeInfo("Debe ingresar una cuenta");
+                return;
+            }
+            var ventana = new VentanaLogin(txtCuenta.Text);
+            this.Hide();
+            ventana.ShowDialog();
+
+            /* new VentanaProducto("Carlos Reyes", "Bodeguero").Show();
+             Hide();
+            Comentado por Tomas (no aparece esta linea en el video 4to)
+            */
         }
 
         private void label1_Click(object sender, EventArgs e)
