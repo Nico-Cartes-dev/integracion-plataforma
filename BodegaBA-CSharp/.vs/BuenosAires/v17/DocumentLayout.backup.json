@@ -1,0 +1,135 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\BuenosAires\\BodegaBA-CSharp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F45051A2-3661-44A1-A563-B6C94ABF25D5}|BuenosAires.BodegaBA\\BuenosAires.BodegaBA.csproj|c:\\buenosaires\\bodegaba-csharp\\buenosaires.bodegaba\\ventanalogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F45051A2-3661-44A1-A563-B6C94ABF25D5}|BuenosAires.BodegaBA\\BuenosAires.BodegaBA.csproj|solutionrelative:buenosaires.bodegaba\\ventanalogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F45051A2-3661-44A1-A563-B6C94ABF25D5}|BuenosAires.BodegaBA\\BuenosAires.BodegaBA.csproj|c:\\buenosaires\\bodegaba-csharp\\buenosaires.bodegaba\\ventanalogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F45051A2-3661-44A1-A563-B6C94ABF25D5}|BuenosAires.BodegaBA\\BuenosAires.BodegaBA.csproj|solutionrelative:buenosaires.bodegaba\\ventanalogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1D7352D-5A35-4D61-A9CE-6137549F5387}|BuenosAires.DataLayer\\BuenosAires.DataLayer.csproj|C:\\BuenosAires\\BodegaBA-CSharp\\buenosaires.datalayer\\buenosairesedm.edmx||{C99AEA30-8E36-4515-B76F-496F5A48A6AA}|",
+      "RelativeMoniker": "D:0:0:{F1D7352D-5A35-4D61-A9CE-6137549F5387}|BuenosAires.DataLayer\\BuenosAires.DataLayer.csproj|solutionrelative:buenosaires.datalayer\\buenosairesedm.edmx||{C99AEA30-8E36-4515-B76F-496F5A48A6AA}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ABFC198E-786B-444C-9E0E-7C9E635C8265}|BuenosAires.Model\\BuenosAires.Model.csproj|c:\\buenosaires\\bodegaba-csharp\\buenosaires.model\\auth_user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ABFC198E-786B-444C-9E0E-7C9E635C8265}|BuenosAires.Model\\BuenosAires.Model.csproj|solutionrelative:buenosaires.model\\auth_user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{404B76B3-C806-4EDD-8C95-65C031412390}|BuenosAires.BusinessLayer\\BuenosAires.BusinessLayer.csproj|c:\\buenosaires\\bodegaba-csharp\\buenosaires.businesslayer\\bcproducto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{404B76B3-C806-4EDD-8C95-65C031412390}|BuenosAires.BusinessLayer\\BuenosAires.BusinessLayer.csproj|solutionrelative:buenosaires.businesslayer\\bcproducto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1D7352D-5A35-4D61-A9CE-6137549F5387}|BuenosAires.DataLayer\\BuenosAires.DataLayer.csproj|C:\\BuenosAires\\BodegaBA-CSharp\\buenosaires.datalayer\\dcproducto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1D7352D-5A35-4D61-A9CE-6137549F5387}|BuenosAires.DataLayer\\BuenosAires.DataLayer.csproj|solutionrelative:buenosaires.datalayer\\dcproducto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1D7352D-5A35-4D61-A9CE-6137549F5387}|BuenosAires.DataLayer\\BuenosAires.DataLayer.csproj|C:\\BuenosAires\\BodegaBA-CSharp\\buenosaires.datalayer\\buenosairesedm.context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1D7352D-5A35-4D61-A9CE-6137549F5387}|BuenosAires.DataLayer\\BuenosAires.DataLayer.csproj|solutionrelative:buenosaires.datalayer\\buenosairesedm.context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "auth_user.cs",
+              "DocumentMoniker": "C:\\BuenosAires\\BodegaBA-CSharp\\BuenosAires.Model\\auth_user.cs",
+              "RelativeDocumentMoniker": "BuenosAires.Model\\auth_user.cs",
+              "ToolTip": "C:\\BuenosAires\\BodegaBA-CSharp\\BuenosAires.Model\\auth_user.cs",
+              "RelativeToolTip": "BuenosAires.Model\\auth_user.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T00:06:43.052Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "VentanaLogin.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\BuenosAires\\BodegaBA-CSharp\\BuenosAires.BodegaBA\\VentanaLogin.cs",
+              "RelativeDocumentMoniker": "BuenosAires.BodegaBA\\VentanaLogin.cs",
+              "ToolTip": "C:\\BuenosAires\\BodegaBA-CSharp\\BuenosAires.BodegaBA\\VentanaLogin.cs [Dise\u00F1o]",
+              "RelativeToolTip": "BuenosAires.BodegaBA\\VentanaLogin.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-28T23:55:27.911Z",
+              "EditorCaption": " [Dise\u00F1o]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "VentanaLogin.cs",
+              "DocumentMoniker": "C:\\BuenosAires\\BodegaBA-CSharp\\BuenosAires.BodegaBA\\VentanaLogin.cs",
+              "RelativeDocumentMoniker": "BuenosAires.BodegaBA\\VentanaLogin.cs",
+              "ToolTip": "C:\\BuenosAires\\BodegaBA-CSharp\\BuenosAires.BodegaBA\\VentanaLogin.cs",
+              "RelativeToolTip": "BuenosAires.BodegaBA\\VentanaLogin.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-28T23:55:13.931Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "BuenosAiresEDM.Context.cs",
+              "DocumentMoniker": "C:\\BuenosAires\\BodegaBA-CSharp\\BuenosAires.DataLayer\\BuenosAiresEDM.Context.cs",
+              "RelativeDocumentMoniker": "BuenosAires.DataLayer\\BuenosAiresEDM.Context.cs",
+              "ToolTip": "C:\\BuenosAires\\BodegaBA-CSharp\\BuenosAires.DataLayer\\BuenosAiresEDM.Context.cs",
+              "RelativeToolTip": "BuenosAires.DataLayer\\BuenosAiresEDM.Context.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAjwA4AAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T17:27:48.891Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "BcProducto.cs",
+              "DocumentMoniker": "C:\\BuenosAires\\BodegaBA-CSharp\\BuenosAires.BusinessLayer\\BcProducto.cs",
+              "RelativeDocumentMoniker": "BuenosAires.BusinessLayer\\BcProducto.cs",
+              "ToolTip": "C:\\BuenosAires\\BodegaBA-CSharp\\BuenosAires.BusinessLayer\\BcProducto.cs",
+              "RelativeToolTip": "BuenosAires.BusinessLayer\\BcProducto.cs",
+              "ViewState": "AgIAAF0AAAAAAAAAAAA4wHkAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-26T19:50:37.879Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DcProducto.cs",
+              "DocumentMoniker": "C:\\BuenosAires\\BodegaBA-CSharp\\BuenosAires.DataLayer\\DcProducto.cs",
+              "RelativeDocumentMoniker": "BuenosAires.DataLayer\\DcProducto.cs",
+              "ToolTip": "C:\\BuenosAires\\BodegaBA-CSharp\\BuenosAires.DataLayer\\DcProducto.cs",
+              "RelativeToolTip": "BuenosAires.DataLayer\\DcProducto.cs",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAowD4AAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-26T18:53:20.67Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BuenosAiresEDM.edmx [Diagram1]",
+              "DocumentMoniker": "C:\\BuenosAires\\BodegaBA-CSharp\\BuenosAires.DataLayer\\BuenosAiresEDM.edmx",
+              "RelativeDocumentMoniker": "BuenosAires.DataLayer\\BuenosAiresEDM.edmx",
+              "ToolTip": "C:\\BuenosAires\\BodegaBA-CSharp\\BuenosAires.DataLayer\\BuenosAiresEDM.edmx [Diagram1]",
+              "RelativeToolTip": "BuenosAires.DataLayer\\BuenosAiresEDM.edmx [Diagram1]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001116|",
+              "WhenOpened": "2025-05-26T18:07:27.27Z",
+              "EditorCaption": " [Diagram1]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
