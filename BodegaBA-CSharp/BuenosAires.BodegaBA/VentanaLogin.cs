@@ -15,10 +15,10 @@ namespace BuenosAires.VentaBA
 {
     public partial class VentanaLogin : Form
     {
+
         public VentanaLogin()
         {
             InitializeComponent();
-            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
@@ -34,7 +34,7 @@ namespace BuenosAires.VentaBA
                 this.MensajeInfo("Debe ingresar una cuenta");
                 return;
             }
-            var ventana = new VentanaLogin(txtCuenta.Text);
+            var ventana = new VentanaProducto(txtCuenta.Text);
             this.Hide();
             ventana.ShowDialog();
 

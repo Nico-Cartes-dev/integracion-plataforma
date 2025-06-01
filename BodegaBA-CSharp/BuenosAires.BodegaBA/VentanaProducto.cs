@@ -9,7 +9,7 @@ namespace BuenosAires.BodegaBA
 {
     public partial class VentanaProducto : Form
     {
-        public VentanaProducto(string cuenta, string tipousu)
+        public VentanaProducto(string cuenta )
         {
             InitializeComponent();
             this.Text = $"Mantenedor de productos - Usuario_ {cuenta}";
@@ -29,6 +29,7 @@ namespace BuenosAires.BodegaBA
             CargarProductos();
             this.CentrarVentana();
         }
+
 
         private void Nuevo()
         {
@@ -71,8 +72,7 @@ namespace BuenosAires.BodegaBA
 
         private bool Buscar()
         {
-            int id = new VentanaBuscarID().MostralVentanaModal();
-            //MostrarVentanaModal es una pagGrafica
+            int id = new VentanaBuscarID().MostrarVentanaModal(); // Corrected method name
             if (id == -1) return false;
 
             var bc = new BcProducto();
