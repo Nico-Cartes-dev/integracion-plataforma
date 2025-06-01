@@ -132,6 +132,7 @@ namespace BuenosAires.BodegaBA
             this.MensajeInfo(bc.Mensaje);
             return true;
         }
+        
 
         public void CargarProductos()
         {
