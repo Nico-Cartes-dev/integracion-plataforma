@@ -1,5 +1,5 @@
 ﻿
-namespace BuenosAires.VentaBA
+namespace BuenosAires.BodegaBA
 {
     partial class VentanaLogin
     {

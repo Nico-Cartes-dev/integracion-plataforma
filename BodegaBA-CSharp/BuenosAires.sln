@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuenosAires.BodegaBA", "BuenosAires.BodegaBA\BuenosAires.BodegaBA.csproj", "{F45051A2-3661-44A1-A563-B6C94ABF25D5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE} = {B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuenosAires.Model", "BuenosAires.Model\BuenosAires.Model.csproj", "{ABFC198E-786B-444C-9E0E-7C9E635C8265}"
 EndProject
