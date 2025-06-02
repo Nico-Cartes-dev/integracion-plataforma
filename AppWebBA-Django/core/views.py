@@ -2,7 +2,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
-from .models import Producto, PerfilUsuario
+from .models import Producto, PerfilUsuario, SolicitudServicio, Factura
 from .forms import ProductoForm, IniciarSesionForm
 from .forms import RegistrarUsuarioForm, PerfilUsuarioForm
 from django.db.models import Count, Case, When, Value, CharField, Q
@@ -325,6 +325,7 @@ def equipos_bodega(request):
 
 logger = logging.getLogger(__name__)
 
+@csrf_exempt
 def tienda(request):
     # Fetch exchange rate
     exchange_rate = get_exchange_clp_usd()
@@ -368,3 +369,35 @@ def tienda(request):
         'productos': productos_with_usd,
         'exchange_rate': exchange_rate
     })
+
+@csrf_exempt
+def registrar_solicitud_servicio(request):
+    if not request.user.is_authenticated:
+        return redirect('iniciar_sesion')
+
+    if request.method == 'POST':
+        form = SolicitudServicio(request.POST)
+        if form.is_valid():
+            tipo_solicitud = form.cleaned_data['tipo_solicitud']
+            descripcion = form.cleaned_data['descripcion']
+            fecha_sugerida = form.cleaned_data['fecha_sugerida']
+            hora_sugerida = form.cleaned_data['hora_sugerida']
+            rut_cliente = PerfilUsuario.objects.get(user=request.user).rut
+
+            # Llamar al procedimiento almacenado
+            with connection.cursor() as cursor:
+                cursor.callproc('SP_CREAR_SOLICITUD_SERVICIO', [
+                    rut_cliente,
+                    tipo_solicitud,
+                    descripcion,
+                    fecha_sugerida,
+                    hora_sugerida
+                ])
+
+            # Redirigir al pago
+            return redirect('iniciar_pago')
+
+    else:
+        form = SolicitudServicio()
+
+    return render(request, 'core/registrar_solicitud_servicio.html', {'form': form})

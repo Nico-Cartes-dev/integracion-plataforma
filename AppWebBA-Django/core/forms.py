@@ -36,3 +36,13 @@ class PerfilUsuarioForm(Form):
 
     class Meta:
         fields = '__all__'
+
+class SolicitudServicioForm(forms.Form):
+    TIPO_SOLICITUD_CHOICES = [
+        ('Mantención', 'Mantención'),
+        ('Reparación', 'Reparación'),
+    ]
+    tipo_solicitud = forms.ChoiceField(choices=TIPO_SOLICITUD_CHOICES, label="Tipo de Solicitud")
+    descripcion = forms.CharField(widget=forms.Textarea, label="Descripción")
+    fecha_sugerida = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label="Fecha Sugerida")
+    hora_sugerida = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}), label="Hora Sugerida")
