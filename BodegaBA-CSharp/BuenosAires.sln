@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuenosAires.DataLayer", "Bu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuenosAires.BusinessLayer", "BuenosAires.BusinessLayer\BuenosAires.BusinessLayer.csproj", "{404B76B3-C806-4EDD-8C95-65C031412390}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuenosAires.ServiceLayer", "BuenosAires.ServiceLayer\BuenosAires.ServiceLayer.csproj", "{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{404B76B3-C806-4EDD-8C95-65C031412390}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{404B76B3-C806-4EDD-8C95-65C031412390}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{404B76B3-C806-4EDD-8C95-65C031412390}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
