@@ -2,8 +2,8 @@
 using System.Windows.Forms;
 using System.Collections.Generic;
 using BuenosAires.Model;
-using BuenosAires.BusinessLayer;
 using BuenosAires.Model.Utiles;
+using BuenosAires.ServiceProxy;
 
 namespace BuenosAires.BodegaBA
 {
@@ -75,8 +75,8 @@ namespace BuenosAires.BodegaBA
             int id = new VentanaBuscarID().MostrarVentanaModal(); // Corrected method name
             if (id == -1) return false;
 
-            var bc = new BcProducto();
-            bc.leer(id);
+            var bc = new ScProducto();
+            bc.Leer(id);
 
             if (bc.Producto == null) return this.MensajeError(bc.Mensaje);
 
@@ -99,7 +99,7 @@ namespace BuenosAires.BodegaBA
             prod.precio = txtPrecio.ToInt();
             prod.imagen = txtImagen.Text;
 
-            var bc = new BcProducto();
+            var bc = new ScProducto();
 
             if (txtIdProd.Text.Trim() == "")
             {
@@ -122,7 +122,7 @@ namespace BuenosAires.BodegaBA
 
         private bool Eliminar()
         {
-            var bc = new BcProducto();
+            var bc = new ScProducto();
             if (txtIdProd.Text.Trim() == "")
             {
                 return this.ErrAccionID("ID", "eliminar");
@@ -136,7 +136,7 @@ namespace BuenosAires.BodegaBA
 
         public void CargarProductos()
         {
-            var bc = new BcProducto();
+            var bc = new ScProducto();
             bc.LeerTodos();
             grid.DataSource = bc.Lista;
             grid.RefrescarYajustar();
