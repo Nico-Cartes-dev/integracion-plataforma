@@ -1,0 +1,36 @@
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.img-hover-zoom {
+  overflow: hidden;
+}
+
+.img-hover-zoom img {
+  transition: transform 0.5s ease;
+  object-fit: cover;
+  height: 200px;
+  width: 100%;
+}
+
+.img-hover-zoom:hover img {
+  transform: scale(1.1);
+}
+
+.btn-animate {
+  transition: all 0.3s ease-in-out;
+  border-radius: 50px;
+}
+
+.btn-animate:hover {
+  background-color: #007bff;
+  color: white;
+  transform: scale(1.05);
+}
