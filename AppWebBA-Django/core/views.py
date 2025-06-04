@@ -1,0 +1,355 @@
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.shortcuts import redirect, render
+from django.views.decorators.csrf import csrf_exempt
+from .models import Producto, PerfilUsuario
+from .forms import ProductoForm, IniciarSesionForm
+from .forms import RegistrarUsuarioForm, PerfilUsuarioForm
+from django.db.models import Count, Case, When, Value, CharField, Q
+#from .error.transbank_error import TransbankError
+from transbank.webpay.webpay_plus.transaction import Transaction, WebpayOptions
+from django.db import connection
+import random
+import requests
+from .utils import get_exchange_clp_usd
+import logging
+
+def home(request):
+    return render(request, "core/home.html")
+
+def iniciar_sesion(request):
+    data = {"mesg": "", "form": IniciarSesionForm()}
+
+    if request.method == "POST":
+        form = IniciarSesionForm(request.POST)
+        if form.is_valid:
+            username = request.POST.get("username")
+            password = request.POST.get("password")
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    tipousu = PerfilUsuario.objects.get(user=user).tipousu
+                    if tipousu != 'Bodeguero':
+                        return redirect(home)
+                    else:
+                        data["mesg"] = "¡La cuenta o la password no son correctos!"    
+                else:
+                    data["mesg"] = "¡La cuenta o la password no son correctos!"
+            else:
+                data["mesg"] = "¡La cuenta o la password no son correctos!"
+    return render(request, "core/iniciar_sesion.html", data)
+
+def cerrar_sesion(request):
+    logout(request)
+    return redirect(home)
+
+def tienda(request):
+    data = {"list": Producto.objects.all().order_by('idprod')}
+    return render(request, "core/tienda.html", data)
+
+# https://www.transbankdevelopers.cl/documentacion/como_empezar#como-empezar
+# https://www.transbankdevelopers.cl/documentacion/como_empezar#codigos-de-comercio
+# https://www.transbankdevelopers.cl/referencia/webpay
+# https://www.transbankdevelopers.cl/referencia/webpay#ambientes-y-credenciales
+
+# Tipo de tarjeta   Detalle                        Resultado
+# ---------------   -----------------------------  ------------------------------
+# VISA              4051885600446623
+#                   CVV 123
+#                   cualquier fecha de expiración  Genera transacciones aprobadas.
+# AMEX              3700 0000 0002 032
+#                   CVV 1234
+#                   cualquier fecha de expiración  Genera transacciones aprobadas.
+# MASTERCARD        5186 0595 5959 0568
+#                   CVV 123
+#                   cualquier fecha de expiración  Genera transacciones rechazadas.
+# Redcompra         4051 8842 3993 7763            Genera transacciones aprobadas (para operaciones que permiten débito Redcompra y prepago)
+# Redcompra         4511 3466 6003 7060            Genera transacciones aprobadas (para operaciones que permiten débito Redcompra y prepago)
+# Redcompra         5186 0085 4123 3829            Genera transacciones rechazadas (para operaciones que permiten débito Redcompra y prepago)
+
+@csrf_exempt
+def ficha(request, id):
+    data = {"mesg": "", "producto": None}
+    exchange_rate = get_exchange_clp_usd()
+    if exchange_rate is None:
+        exchange_rate = 942.9500
+        logger.warning("Using fallback exchange rate: 942.9500")
+
+    if request.method == "POST":
+        if request.user.is_authenticated and not request.user.is_staff:
+            return redirect(iniciar_pago, id)
+        else:
+            data["mesg"] = "¡Para poder comprar debe iniciar sesión como cliente!"
+
+    producto = Producto.objects.annotate(
+    cantidad=Count(
+        'stockproducto__idprod',
+        filter=Q(stockproducto__nrofac__isnull=True)
+    ),
+    disponibilidad=Case(
+        When(stockproducto__nrofac__isnull=True, then=Value('DISPONIBLE')),
+        default=Value('AGOTADO'),
+        output_field=CharField()
+    )
+).filter(idprod=id).first()
+
+
+
+    # Add USD price
+    producto_dict = {
+        'idprod': producto.idprod,
+        'nomprod': producto.nomprod,
+        'descprod': producto.descprod,
+        'precio': producto.precio,
+        'precio_usd': round(float(producto.precio) / exchange_rate, 2),
+        'imagen': producto.imagen,
+        'cantidad': producto.cantidad,
+        'disponibilidad': producto.disponibilidad
+    }
+    data["producto"] = producto_dict
+    data["exchange_rate"] = exchange_rate
+    return render(request, "core/ficha.html", data)
+
+@csrf_exempt
+def iniciar_pago(request, id):
+
+    # Esta es la implementacion de la VISTA iniciar_pago, que tiene la responsabilidad
+    # de iniciar el pago, por medio de WebPay. Lo primero que hace es seleccionar un 
+    # número de orden de compra, para poder así, identificar a la propia compra.
+    # Como esta tienda no maneja, en realidad no tiene el concepto de "orden de compra"
+    # pero se indica igual
+    print("Webpay Plus Transaction.create")
+    buy_order = str(random.randrange(1000000, 99999999))
+    session_id = request.user.username
+    amount = Producto.objects.get(idprod=id).precio
+    return_url = request.build_absolute_uri('/pago_exitoso/')
+
+    # response = Transaction.create(buy_order, session_id, amount, return_url)
+    commercecode = "597055555532"
+    apikey = "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C"
+
+    tx = Transaction(options=WebpayOptions(commerce_code=commercecode, api_key=apikey, integration_type="TEST"))
+    response = tx.create(buy_order, session_id, amount, return_url)
+    print(response['token'])
+
+    perfil = PerfilUsuario.objects.get(user=request.user)
+    form = PerfilUsuarioForm()
+
+    context = {
+        "buy_order": buy_order,
+        "session_id": session_id,
+        "amount": amount,
+        "return_url": return_url,
+        "response": response,
+        "token_ws": response['token'],
+        "url_tbk": response['url'],
+        "first_name": request.user.first_name,
+        "last_name": request.user.last_name,
+        "email": request.user.email,
+        "rut": perfil.rut,
+        "dirusu": perfil.dirusu,
+    }
+
+    return render(request, "core/iniciar_pago.html", context)
+
+@csrf_exempt
+def pago_exitoso(request):
+
+    if request.method == "GET":
+        token = request.GET.get("token_ws")
+        print("commit for token_ws: {}".format(token))
+        commercecode = "597055555532"
+        apikey = "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C"
+        tx = Transaction(options=WebpayOptions(commerce_code=commercecode, api_key=apikey, integration_type="TEST"))
+        response = tx.commit(token=token)
+        print("response: {}".format(response))
+
+        user = User.objects.get(username=response['session_id'])
+        perfil = PerfilUsuario.objects.get(user=user)
+        form = PerfilUsuarioForm()
+
+        context = {
+            "buy_order": response['buy_order'],
+            "session_id": response['session_id'],
+            "amount": response['amount'],
+            "response": response,
+            "token_ws": token,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            "rut": perfil.rut,
+            "dirusu": perfil.dirusu,
+            "response_code": response['response_code']
+        }
+
+        return render(request, "core/pago_exitoso.html", context)
+    else:
+        return redirect(home)
+
+@csrf_exempt
+def administrar_productos(request, action, id):
+    if not (request.user.is_authenticated and request.user.is_staff):
+        return redirect(home)
+
+    data = {"mesg": "", "form": ProductoForm, "action": action, "id": id, "formsesion": IniciarSesionForm}
+
+    if action == 'ins':
+        if request.method == "POST":
+            form = ProductoForm(request.POST, request.FILES)
+            if form.is_valid:
+                try:
+                    form.save()
+                    data["mesg"] = "¡El producto fue creado correctamente!"
+                except:
+                    data["mesg"] = "¡No se puede crear dos vehículos con el mismo ID!"
+
+    elif action == 'upd':
+        objeto = Producto.objects.get(idprod=id)
+        if request.method == "POST":
+            form = ProductoForm(data=request.POST, files=request.FILES, instance=objeto)
+            if form.is_valid:
+                form.save()
+                data["mesg"] = "¡El producto fue actualizado correctamente!"
+        data["form"] = ProductoForm(instance=objeto)
+
+    elif action == 'del':
+        try:
+            Producto.objects.get(idprod=id).delete()
+            data["mesg"] = "¡El producto fue eliminado correctamente!"
+            return redirect(administrar_productos, action='ins', id = '-1')
+        except:
+            data["mesg"] = "¡El producto ya estaba eliminado!"
+
+    data["list"] = Producto.objects.all().order_by('idprod')
+    return render(request, "core/administrar_productos.html", data)
+
+def registrar_usuario(request):
+    if request.method == 'POST':
+        form = RegistrarUsuarioForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+
+            # Datos del formulario extendido
+            rut = form.cleaned_data['rut']
+            tipousu = form.cleaned_data['tipousu']
+            dirusu = form.cleaned_data['dirusu']
+
+            # Guardar perfil de usuario
+            PerfilUsuario.objects.create(user=user, rut=rut, tipousu=tipousu, dirusu=dirusu)
+            messages.success(request, '¡Usuario registrado exitosamente!')
+            return redirect('iniciar_sesion')  # O la URL que corresponda
+        else:
+            # Mostrar errores del formulario si no es válido
+            return render(request, "core/registrar_usuario.html", {'form': form})
+    
+    # GET: mostrar formulario vacío
+    form = RegistrarUsuarioForm()
+    return render(request, "core/registrar_usuario.html", {'form': form})
+
+def perfil_usuario(request):
+    data = {"mesg": "", "form": PerfilUsuarioForm}
+
+    if request.method == 'POST':
+        form = PerfilUsuarioForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            user.first_name = request.POST.get("first_name")
+            user.last_name = request.POST.get("last_name")
+            user.email = request.POST.get("email")
+            user.save()
+            perfil = PerfilUsuario.objects.get(user=user)
+            perfil.rut = request.POST.get("rut")
+            perfil.tipousu = request.POST.get("tipousu")
+            perfil.dirusu = request.POST.get("dirusu")
+            perfil.save()
+            data["mesg"] = "¡Sus datos fueron actualizados correctamente!"
+
+    perfil = PerfilUsuario.objects.get(user=request.user)
+    form = PerfilUsuarioForm()
+    form.fields['first_name'].initial = request.user.first_name
+    form.fields['last_name'].initial = request.user.last_name
+    form.fields['email'].initial = request.user.email
+    form.fields['rut'].initial = perfil.rut
+    form.fields['tipousu'].initial = perfil.tipousu
+    form.fields['dirusu'].initial = perfil.dirusu
+    data["form"] = form
+    return render(request, "core/perfil_usuario.html", data)
+
+def obtener_solicitudes_de_servicio(request):
+    tipousu = PerfilUsuario.objects.get(user=request.user).tipousu
+    data = {'tipousu': tipousu }
+    return render(request, "core/obtener_solicitudes_de_servicio.html", data)
+
+
+def equipos_bodega(request):
+    # *obtener los equipos de la bodega
+    productos = Producto.objects.annotate(
+        cantidad=Count(
+            'stockproducto__idprod',
+            filter=models.Q(stockproducto__nrofac__isnull=True)
+        ),
+        disponibilidad=Case(
+            When(cantidad=0, then=Value('AGOTADO')),
+            default=Value('DISPONIBLE'),
+            output_field=CharField()
+        )
+    ).values(
+        'idprod',
+        'nomprod',
+        'descprod',
+        'precio',
+        'imagen',
+        'cantidad',
+        'disponibilidad'
+    ).order_by('idprod')
+
+    productos_list = list(productos)
+    
+    return JsonResponse({'productos': productos_list})
+
+logger = logging.getLogger(__name__)
+
+def tienda(request):
+    # Fetch exchange rate
+    exchange_rate = get_exchange_clp_usd()
+    if exchange_rate is None:
+        exchange_rate = 942.9500  
+        logger.warning("Using fallback exchange rate: 942.9500")
+
+    
+    productos = Producto.objects.annotate(
+        cantidad=Count(
+            'stockproducto__idprod',
+            filter=Q(stockproducto__nrofac__isnull=True)
+        ),
+        disponibilidad=Case(
+            When(cantidad=0, then=Value('AGOTADO')),
+            default=Value('DISPONIBLE'),
+            output_field=CharField()
+        )
+    ).values(
+        'idprod',
+        'nomprod',
+        'descprod',
+        'precio',
+        'imagen',
+        'cantidad',
+        'disponibilidad'
+    ).order_by('idprod')
+
+    
+    productos_with_usd = [
+        {
+            **producto,
+            'precio_usd': round(float(producto['precio']) / exchange_rate, 2)
+        }
+        for producto in productos
+    ]
+
+    return render(request, 'core/tienda.html', {
+        'productos': productos_with_usd,
+        'exchange_rate': exchange_rate
+    })
