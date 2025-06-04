@@ -16,12 +16,15 @@ class IniciarSesionForm(Form):
         fields = ['username', 'password']
 
 class RegistrarUsuarioForm(UserCreationForm):
-    rut = forms.CharField(max_length=20, required=True, label="Rut")
-    tipousu = forms.CharField(max_length=50, required=True, label="Tipo de usuario", initial='admin')
-    dirusu = forms.CharField(max_length=300, required=True, label="Dirección")
+    first_name = forms.CharField(max_length=100, required=True, label='Nombre')
+    last_name = forms.CharField(max_length=100, required=True, label='Apellido')
+    email = forms.EmailField(required=True, label='Email')
+    rut = forms.CharField(max_length=12, required=True, label='RUT')
+    dirusu = forms.CharField(max_length=200, required=True, label='Dirección')
+
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'tipousu', 'rut', 'dirusu']
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'rut', 'dirusu')
 
 class PerfilUsuarioForm(Form):
     first_name = forms.CharField(max_length=150, required=True, label="Nombres")
@@ -33,3 +36,13 @@ class PerfilUsuarioForm(Form):
 
     class Meta:
         fields = '__all__'
+
+class SolicitudServicioForm(forms.Form):
+    TIPO_SOLICITUD_CHOICES = [
+        ('Mantención', 'Mantención'),
+        ('Reparación', 'Reparación'),
+    ]
+    tipo_solicitud = forms.ChoiceField(choices=TIPO_SOLICITUD_CHOICES, label="Tipo de Solicitud")
+    descripcion = forms.CharField(widget=forms.Textarea, label="Descripción")
+    fecha_sugerida = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label="Fecha Sugerida")
+    hora_sugerida = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}), label="Hora Sugerida")

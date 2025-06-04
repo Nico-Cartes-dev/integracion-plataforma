@@ -2,7 +2,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
-from .models import Producto, PerfilUsuario
+from .models import Producto, PerfilUsuario, SolicitudServicio, Factura
 from .forms import ProductoForm, IniciarSesionForm
 from .forms import RegistrarUsuarioForm, PerfilUsuarioForm
 from django.db.models import Count, Case, When, Value, CharField, Q
@@ -84,7 +84,7 @@ def ficha(request, id):
             data["mesg"] = "¡Para poder comprar debe iniciar sesión como cliente!"
 
     producto = Producto.objects.annotate(
-        cantidad=round(
+        cantidad=Count(
             'stockproducto__idprod',
             filter=Q(stockproducto__nrofac__isnull=True)
         ),
@@ -227,14 +227,39 @@ def registrar_usuario(request):
     if request.method == 'POST':
         form = RegistrarUsuarioForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            rut = request.POST.get("rut")
-            tipousu = request.POST.get("tipousu")
-            dirusu = request.POST.get("dirusu")
-            PerfilUsuario.objects.update_or_create(user=user, rut=rut, tipousu=tipousu, dirusu=dirusu)
-            return redirect(iniciar_sesion)
-    form = RegistrarUsuarioForm()
-    return render(request, "core/registrar_usuario.html", context={'form': form})
+            try:
+                # Crear usuario pero no guardarlo aún
+                user = form.save(commit=False)
+                # Asegurarse que el usuario sea un cliente normal
+                user.is_staff = False
+                user.is_superuser = False
+                user.save()
+
+                # Crear perfil de usuario
+                rut = request.POST.get("rut")
+                dirusu = request.POST.get("dirusu")
+                
+                tipousu = "Cliente"
+
+                PerfilUsuario.objects.create(
+                    user=user,
+                    rut=rut,
+                    tipousu=tipousu,
+                    dirusu=dirusu
+                )
+ 
+                return redirect(iniciar_sesion)
+            except Exception as e:
+                if user.pk:
+                    user.delete()
+                form.add_error(None, f"Error al registrar usuario: {str(e)}")
+    else:
+        form = RegistrarUsuarioForm()
+    
+    return render(request, "core/registrar_usuario.html", {
+        'form': form,
+        'titulo': 'Registro de Cliente Nuevo'
+    })
 
 def perfil_usuario(request):
     data = {"mesg": "", "form": PerfilUsuarioForm}
@@ -294,17 +319,19 @@ def equipos_bodega(request):
     ).order_by('idprod')
 
     productos_list = list(productos)
+    print(productos_list)
     
     return JsonResponse({'productos': productos_list})
 
 logger = logging.getLogger(__name__)
 
+@csrf_exempt
 def tienda(request):
     # Fetch exchange rate
     exchange_rate = get_exchange_clp_usd()
     if exchange_rate is None:
         exchange_rate = 942.9500  
-        logger.warning("Using fallback exchange rate: 942.9500")
+        logger.warning(f"Using fallback exchange rate: {exchange_rate}")
 
     
     productos = Producto.objects.annotate(
@@ -335,8 +362,86 @@ def tienda(request):
         }
         for producto in productos
     ]
+    # ? print(productos_with_usd)
+    
 
     return render(request, 'core/tienda.html', {
         'productos': productos_with_usd,
         'exchange_rate': exchange_rate
     })
+
+@csrf_exempt
+def registrar_solicitud_servicio(request):
+    if not request.user.is_authenticated:
+        return redirect('iniciar_sesion')
+
+    if request.method == 'POST':
+        form = SolicitudServicio(request.POST)
+        if form.is_valid():
+            tipo_solicitud = form.cleaned_data['tipo_solicitud']
+            descripcion = form.cleaned_data['descripcion']
+            fecha_sugerida = form.cleaned_data['fecha_sugerida']
+            hora_sugerida = form.cleaned_data['hora_sugerida']
+            rut_cliente = PerfilUsuario.objects.get(user=request.user).rut
+
+            # Llamar al procedimiento almacenado
+            with connection.cursor() as cursor:
+                cursor.callproc('SP_CREAR_SOLICITUD_SERVICIO', [
+                    rut_cliente,
+                    tipo_solicitud,
+                    descripcion,
+                    fecha_sugerida,
+                    hora_sugerida
+                ])
+
+            # Redirigir al pago
+            return redirect('iniciar_pago')
+
+    else:
+        form = SolicitudServicio()
+
+    return render(request, 'core/registrar_solicitud_servicio.html', {'form': form})
+
+@csrf_exempt
+def facturas(request):
+    if not request.user.is_authenticated:
+        return redirect('iniciar_sesion')
+
+    try:
+        perfil = PerfilUsuario.objects.get(user=request.user)
+        rut_cliente = perfil.rut if perfil.tipousu != 'Administrador' else 'admin'
+
+        # Llamar al procedimiento almacenado SP_OBTENER_FACTURAS
+        with connection.cursor() as cursor:
+            cursor.callproc('SP_OBTENER_FACTURAS', [rut_cliente])
+            facturas = cursor.fetchall()
+            # Obtener nombres de columnas
+            columns = [col[0] for col in cursor.description]
+            # Convertir a lista de diccionarios
+            facturas = [dict(zip(columns, row)) for row in facturas]
+
+        # Si el usuario es un cliente, obtener las guías de despacho
+        guias_despacho = []
+        if perfil.tipousu != 'Administrador':
+            with connection.cursor() as cursor:
+                cursor.callproc('SP_OBTENER_GUIAS_DE_DESPACHO')
+                guias_despacho = cursor.fetchall()
+                # Obtener nombres de columnas
+                columns = [col[0] for col in cursor.description]
+                # Convertir a lista de diccionarios
+                guias_despacho = [dict(zip(columns, row)) for row in guias_despacho]
+
+        context = {
+            'facturas': facturas,
+            'guias_despacho': guias_despacho,
+            'tipousu': perfil.tipousu,
+        }
+        return render(request, 'core/facturas.html', context)
+
+    except Exception as e:
+        logger.error(f"Error al obtener facturas: {str(e)}")
+        context = {
+            'error': 'Ocurrió un error al obtener las facturas',
+            'tipousu': getattr(perfil, 'tipousu', None)
+        }
+        return render(request, 'core/facturas.html', context)
