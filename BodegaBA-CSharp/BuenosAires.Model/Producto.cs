@@ -27,11 +27,14 @@ namespace BuenosAires.Model
         public string descprod { get; set; }
         public int precio { get; set; }
         public string imagen { get; set; }
-    
+        
+        [System.Xml.Serialization.XmlIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Factura> Factura { get; set; }
+        [System.Xml.Serialization.XmlIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GuiaDespacho> GuiaDespacho { get; set; }
+        [System.Xml.Serialization.XmlIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockProducto> StockProducto { get; set; }
     }

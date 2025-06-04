@@ -61,6 +61,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\WsAutenticacionReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\WsProductoReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="ConsultarBodega.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +83,8 @@
     <Compile Include="ReservarAnwo.Designer.cs">
       <DependentUpon>ReservarAnwo.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScAutenticacion.cs" />
+    <Compile Include="ScProducto.cs" />
     <Compile Include="VentanaBuscarID.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +138,29 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Connected Services\WsAutenticacionReference\WsAutenticacion.wsdl" />
+    <None Include="Connected Services\WsAutenticacionReference\WsAutenticacion.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WsAutenticacionReference\WsAutenticacion1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WsAutenticacionReference\WsAutenticacion2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WsProductoReference\WsProducto.wsdl" />
+    <None Include="Connected Services\WsProductoReference\WsProducto.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WsProductoReference\WsProducto1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WsProductoReference\WsProducto2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WsProductoReference\WsProducto3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BuenosAires.Model.Producto.datasource" />
     <None Include="Properties\DataSources\BuenosAires.Model.Respuesta.datasource" />
@@ -146,14 +181,44 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuenosAires.BusinessLayer\BuenosAires.BusinessLayer.csproj">
-      <Project>{404b76b3-c806-4edd-8c95-65c031412390}</Project>
-      <Name>BuenosAires.BusinessLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BuenosAires.Model\BuenosAires.Model.csproj">
       <Project>{abfc198e-786b-444c-9e0e-7c9e635c8265}</Project>
       <Name>BuenosAires.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\WsAutenticacionReference\" />
+    <WCFMetadataStorage Include="Connected Services\WsProductoReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsAutenticacionReference\WsAutenticacion.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsAutenticacionReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsAutenticacionReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsAutenticacionReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsProductoReference\WsProducto.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsProductoReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsProductoReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsProductoReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

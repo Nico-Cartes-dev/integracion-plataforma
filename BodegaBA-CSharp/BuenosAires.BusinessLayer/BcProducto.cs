@@ -109,7 +109,7 @@ namespace BuenosAires.BusinessLayer
             *   no este asociado con otras tablas del sistema, por lo tanto se 
             *   debe verificar que este producto no tenga:
             *   -(dcStockProducto)  unidades de producto en la bodega
-            *   -(DcFactyra)        Facturas en las que haya sidop vendido
+            *   -(DcFactura)        Facturas en las que haya sidop vendido
             *   -(DcGuiaDespacho)   Guias de despacho con las que ha sido trasladado el cliente
             *   -(DcSolicitudServicio) Solicitudes de servicio de ningún técnico 
             *   

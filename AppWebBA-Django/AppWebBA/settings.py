@@ -109,7 +109,7 @@ DATABASES = {
         'NAME': 'base_datos',
         'USER': 'sa',
         'PASSWORD': '123',
-        'HOST': 'nico\\SQLEXPRESS',
+        'HOST': 'PCROBERTO\\SQLEXPRESS',
         'PORT': '',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
