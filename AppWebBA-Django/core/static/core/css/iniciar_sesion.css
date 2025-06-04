@@ -25,3 +25,16 @@ input {
 #form_message {
     margin-top: 20px;
 }
+
+.btn-custom-color {
+    background-color: #1a73e8; /* Azul Google */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 30px;
+    transition: all 0.3s ease;
+}
+
+.btn-custom-color:hover {
+    background-color: #155cc0;
+}

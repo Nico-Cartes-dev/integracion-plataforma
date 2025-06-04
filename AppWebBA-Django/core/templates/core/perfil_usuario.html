@@ -6,18 +6,23 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container text-center">
-        <h1>Actualizar Perfil de Usuario</h1>
-        <div class="content container text-center">
-            <form method="POST" class="col-sm-12 col-md-6">
-                {% csrf_token %} {{ form.as_p }}
-                <div class="btn_guardar">
-                    <button class="btn btn-primary" type="submit">Actualizar datos de perfil</button>
-                </div>
-                {% if mesg %}
-                <div id="form_message" class="alert alert-danger" role="alert">{{ mesg }}</div>
-                {% endif %}
-            </form>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="form-container">
+                <h2 class="form-title">Actualizar Perfil de Usuario</h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-primary px-5">Actualizar datos de perfil</button>
+                    </div>
+                    {% if mesg %}
+                        <div id="form_message" class="alert alert-danger mt-3" role="alert">{{ mesg }}</div>
+                    {% endif %}
+                </form>
+            </div>
         </div>
     </div>
+</div>
 {% endblock content %}

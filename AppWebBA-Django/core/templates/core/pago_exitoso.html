@@ -6,27 +6,25 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-6 borde_formulario text-center">
-                {% if response_code == 0 %}
-                    <h1>¡El Pago fue Realizado con Exito!</h1>
-                {% else %}
-                    <h1>¡El Pago no Pudo ser Realizado con Exito!
-                    <br>Por Favor Intente Nuevamente Más Tarde <br>
-                    Ningun cargo fue realizado a la tarjeta</h1>
+    {% if response_code == 0 %}
+        <h1>¡El Pago fue Realizado con Exito!</h1>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-6 borde_formulario text-center">
+                    {% csrf_token %}
 
-                {% endif %}
+                    Número de Orden de Compra: {{ buy_order }}<br><br>
+                    Nombre cliente: {{ first_name }} {{ last_name }}<br><br>
+                    RUT: {{ rut }}<br><br>
+                    Dirección: {{ dirusu }}<br><br>
+                    Correo electrónico: {{ email }}<br><br>
+                    Monto a Pagar: {{ amount }}<br><br>
 
-                Número de Orden de Compra: {{ buy_order }}<br><br>
-                Nombre cliente: {{ first_name }} {{ last_name }}<br><br>
-                RUT: {{ rut }}<br><br>
-                Dirección: {{ dirusu }}<br><br>
-                Correo electrónico: {{ email }}<br><br>
-                Monto a Pagar: {{ amount }}<br><br>
-
-                <a href="{% url 'tienda' %}" class="btn btn-info btn-sm">Ir a la tienda</a>
+                    <a href="{% url 'tienda' %}" class="btn btn-info btn-sm">Ir a la tienda</a>
+                </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <h1>¡El Pago no Pudo ser Realizado con Exito!<br>Por Favor Intente Nuevamente Más Tarde...</h1>
+    {% endif %}
 {% endblock content %}
