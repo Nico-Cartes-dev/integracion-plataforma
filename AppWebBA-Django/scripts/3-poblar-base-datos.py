@@ -153,6 +153,69 @@ BEGIN
 END
 """
 
+SP_OBTENER_FACTURAS = """
+CREATE PROCEDURE [dbo].[SP_OBTENER_FACTURAS]
+    @p_rut_cliente VARCHAR(12)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF @p_rut_cliente = 'admin'
+        SELECT 
+            f.nrofac,
+            f.rutcli,
+            f.idprod,
+            f.fechafac,
+            f.descfac,
+            f.monto,
+            p.nomprod,
+            ISNULL(gd.estadogd, 'Sin despacho') as estado_despacho
+        FROM 
+            Factura f
+            INNER JOIN Producto p ON f.idprod = p.idprod
+            LEFT JOIN GuiaDespacho gd ON f.nrofac = gd.nrofac
+        ORDER BY f.fechafac DESC;
+    ELSE
+        SELECT 
+            f.nrofac,
+            f.rutcli,
+            f.idprod,
+            f.fechafac,
+            f.descfac,
+            f.monto,
+            p.nomprod,
+            ISNULL(gd.estadogd, 'Sin despacho') as estado_despacho
+        FROM 
+            Factura f
+            INNER JOIN Producto p ON f.idprod = p.idprod
+            LEFT JOIN GuiaDespacho gd ON f.nrofac = gd.nrofac
+        WHERE 
+            f.rutcli = @p_rut_cliente
+        ORDER BY f.fechafac DESC;
+END
+"""
+
+SP_OBTENER_GUIAS_DE_DESPACHO = """
+CREATE PROCEDURE [dbo].[SP_OBTENER_GUIAS_DE_DESPACHO]
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        gd.nrogd,
+        gd.nrofac,
+        gd.idprod,
+        gd.estadogd,
+        p.nomprod,
+        f.rutcli
+    FROM 
+        GuiaDespacho gd
+        INNER JOIN Producto p ON gd.idprod = p.idprod
+        INNER JOIN Factura f ON gd.nrofac = f.nrofac
+    ORDER BY gd.nrogd DESC;
+END
+"""
+
 def exec_sql(query):
     with connection.cursor() as cursor:
         cursor.execute(query)
@@ -265,4 +328,14 @@ def run():
     except:
         pass
 
-    
+    try:
+        exec_sql(SP_OBTENER_FACTURAS)
+    except:
+        pass
+
+    try:
+        exec_sql(SP_OBTENER_GUIAS_DE_DESPACHO)
+    except:
+        pass
+
+

@@ -401,3 +401,47 @@ def registrar_solicitud_servicio(request):
         form = SolicitudServicio()
 
     return render(request, 'core/registrar_solicitud_servicio.html', {'form': form})
+
+@csrf_exempt
+def facturas(request):
+    if not request.user.is_authenticated:
+        return redirect('iniciar_sesion')
+
+    try:
+        perfil = PerfilUsuario.objects.get(user=request.user)
+        rut_cliente = perfil.rut if perfil.tipousu != 'Administrador' else 'admin'
+
+        # Llamar al procedimiento almacenado SP_OBTENER_FACTURAS
+        with connection.cursor() as cursor:
+            cursor.callproc('SP_OBTENER_FACTURAS', [rut_cliente])
+            facturas = cursor.fetchall()
+            # Obtener nombres de columnas
+            columns = [col[0] for col in cursor.description]
+            # Convertir a lista de diccionarios
+            facturas = [dict(zip(columns, row)) for row in facturas]
+
+        # Si el usuario es un cliente, obtener las guías de despacho
+        guias_despacho = []
+        if perfil.tipousu != 'Administrador':
+            with connection.cursor() as cursor:
+                cursor.callproc('SP_OBTENER_GUIAS_DE_DESPACHO')
+                guias_despacho = cursor.fetchall()
+                # Obtener nombres de columnas
+                columns = [col[0] for col in cursor.description]
+                # Convertir a lista de diccionarios
+                guias_despacho = [dict(zip(columns, row)) for row in guias_despacho]
+
+        context = {
+            'facturas': facturas,
+            'guias_despacho': guias_despacho,
+            'tipousu': perfil.tipousu,
+        }
+        return render(request, 'core/facturas.html', context)
+
+    except Exception as e:
+        logger.error(f"Error al obtener facturas: {str(e)}")
+        context = {
+            'error': 'Ocurrió un error al obtener las facturas',
+            'tipousu': getattr(perfil, 'tipousu', None)
+        }
+        return render(request, 'core/facturas.html', context)
