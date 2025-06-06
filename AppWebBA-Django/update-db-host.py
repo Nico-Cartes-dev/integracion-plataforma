@@ -7,7 +7,8 @@ if len(sys.argv) != 2:
 nuevo_host = sys.argv[1]
 
 # --- Reemplazo en settings.py ---
-ruta_settings = r"F:\Buenos aires\AppWebBA-Django\AppWebBA\settings.py"
+ruta_settings = r"c:\Buenosaires\AppWebBA-Django\AppWebBA\settings.py"
+# ruta_settings = r"F:\int_plataforma\integracion-plataforma\AppWebBA-Django\AppWebBA\settings.py"
 with open(ruta_settings, 'r', encoding='utf-8') as f:
     contenido = f.read()
 
@@ -20,7 +21,8 @@ with open(ruta_settings, 'w', encoding='utf-8') as f:
     f.write(contenido)
 
 # --- Reemplazo en archivos de C# ---
-carpeta_bodega = r"F:\Buenos aires\BodegaBA-CSharp"
+carpeta_bodega = r"c:\Buenosaires\BodegaBA-CSharp"
+# carpeta_bodega = r"F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp"
 for raiz, _, archivos in os.walk(carpeta_bodega):
     for nombre in archivos:
         if nombre.lower().endswith(('.cs', '.config', '.txt')):
