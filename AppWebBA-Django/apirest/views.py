@@ -19,3 +19,29 @@ def autenticar(request, tipousu, username, password):
     else:
         nombre, tipo, msg = '', '', 'La cuenta o la contraseña no coinciden con un usuario válido'
     return JsonResponse({'Autenticado': False, 'NombreUsuario': nombre, 'TipoUsuario': tipo, 'Mensaje': msg})
+
+
+@csrf_exempt
+@api_view(['GET'])
+# direccion
+# http://127.0.0.1:8001/BuenosAiresApiRest/obtener_productos
+def obtener_productos(request):
+    try:
+        with connection.cursor() as cursor:
+            cursor.callproc('SP_OBTENER_PRODUCTOS')
+            productos = cursor.fetchall()
+            columns = [col[0] for col in cursor.description]
+            productos_list = [
+                {
+                    'idprod': producto[0],
+                    'nomprod': producto[1],
+                    'descprod': producto[2],
+                    'precio': float(producto[3]),
+                    'imagen': producto[4] if producto[4] else None
+                }
+                for producto in productos
+            ]
+            return JsonResponse({'productos': productos_list})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
