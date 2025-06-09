@@ -7,3 +7,5 @@ AppWebBA-Django/update-db-host.py
 BodegaBA-CSharp/.vs/BuenosAires/config/applicationhost.config
 /BodegaBA-CSharp/.vs
 /BodegaBA-CSharp/.vs
+/AppWebBA-Django/apirest/migrations/__pycache__
+AppWebBA-Django/AppWebBA/settings.py
