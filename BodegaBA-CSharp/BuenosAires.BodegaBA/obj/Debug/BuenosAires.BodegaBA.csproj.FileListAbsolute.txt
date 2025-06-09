@@ -155,5 +155,4 @@ F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\ob
 F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Debug\BuenosAires.BodegaBA.exe
 F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Debug\BuenosAires.BodegaBA.pdb
 C:\BuenosAires\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Debug\BuenosAires.BodegaBA.VentanaLogin.resources
-C:\BuenosAires\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Debug\BuenosAires.BodegaBA.exe.config
 C:\BuenosAires\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Debug\BuenosAires.BodegaBA.VentanaReservarAnwo.resources
