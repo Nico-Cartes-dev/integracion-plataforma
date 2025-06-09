@@ -57,3 +57,7 @@ F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.ServiceLaye
 F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.ServiceLayer\obj\Debug\BuenosAi.C775F586.Up2Date
 F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.ServiceLayer\obj\Debug\BuenosAires.ServiceLayer.dll
 F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.ServiceLayer\obj\Debug\BuenosAires.ServiceLayer.pdb
+C:\BuenosAires\integracion-plataforma\BodegaBA-CSharp\BuenosAires.ServiceLayer\bin\EntityFramework.dll
+C:\BuenosAires\integracion-plataforma\BodegaBA-CSharp\BuenosAires.ServiceLayer\bin\EntityFramework.SqlServer.dll
+C:\BuenosAires\integracion-plataforma\BodegaBA-CSharp\BuenosAires.ServiceLayer\bin\EntityFramework.xml
+C:\BuenosAires\integracion-plataforma\BodegaBA-CSharp\BuenosAires.ServiceLayer\bin\EntityFramework.SqlServer.xml

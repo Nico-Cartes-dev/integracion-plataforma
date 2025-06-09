@@ -1,6 +1,5 @@
 call python manage.py runscript -v3 1-eliminar-tablas
-@REM call rmdir /s /q F:\int_plataforma\integracion-plataforma\AppWebBA-Django\core\migrations
-call rmdir /s /q c:\BuenosAires\integracion-plataforma\AppWebBA-Django\core\migrations
+call rmdir /s /q C:\BuenosAires\integracion-plataforma\AppWebBA-Django\core\migrations
 call python manage.py makemigrations
 call python manage.py makemigrations core
 call python manage.py migrate

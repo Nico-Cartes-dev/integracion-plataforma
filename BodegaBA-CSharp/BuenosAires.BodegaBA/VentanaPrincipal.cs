@@ -17,6 +17,13 @@ namespace BuenosAires.BodegaBA
             InitializeComponent();
         }
 
+        // Add a constructor that accepts a string parameter to fix the error  
+        public VentanaPrincipal(string userInfo) : this()
+        {
+            // Optionally, you can use the userInfo parameter to set a label or other UI element  
+            this.Text = userInfo;
+        }
+
         private void VentanaPrincipal_Load(object sender, EventArgs e)
         {
 

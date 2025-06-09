@@ -30,7 +30,7 @@ namespace BuenosAires.BodegaBA
             sc.Autenticar("Bodeguero", txtCuenta.Text, txtPassword.Text);
             if (sc.Autenticado)
             {
-                new VentanaProducto(sc.NombreUsuario + "(" + sc.TipoUsuario + ")").Show();
+                new VentanaPrincipal(sc.NombreUsuario + "(" + sc.TipoUsuario + ")").Show();
                 Hide();
             }
             else
