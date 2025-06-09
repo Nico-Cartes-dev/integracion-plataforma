@@ -44,9 +44,10 @@ namespace BuenosAires.BodegaBA
 
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        // Cierra la aplicación
+        private void btnSalir_Click(object sender, EventArgs e)
         {
-
+            System.Windows.Forms.Application.Exit();
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -59,9 +60,10 @@ namespace BuenosAires.BodegaBA
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btnReservarEquipos_Click(object sender, EventArgs e)
         {
-
+            new VentanaReservarAnwo().Show();
+            Hide();
         }
     }
 }
