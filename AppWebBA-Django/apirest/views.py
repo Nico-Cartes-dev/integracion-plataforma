@@ -20,7 +20,32 @@ def autenticar(request, tipousu, username, password):
         nombre, tipo, msg = '', '', 'La cuenta o la contraseña no coinciden con un usuario válido'
     return JsonResponse({'Autenticado': False, 'NombreUsuario': nombre, 'TipoUsuario': tipo, 'Mensaje': msg})
 
+def obtener_equipos_en_bodega (request):
+    if request.method == 'GET':
+        cursor = connection.cursor()
 
+        #proceso almacenado
+        cursor.execute("exec sp_obtener_equipos_en_bodega")
+
+        #convertir los resultados 
+        resultados = cursor.fetchall()
+
+        #convertir los resultados a una lista de diccionarios
+        data = []
+        for row in resultados:
+            idstock = row[0]
+            idproducto = row[1]
+            nomprod = row[2]
+            nrofac = row[3]
+            estado = row[4]
+            data.append({
+                'idstock': idstock,
+                'idproducto': idproducto,
+                'nomprod': nomprod,
+                'nrofac': nrofac,
+                'estado': estado
+            })
+        return JsonResponse(data, safe=False)
 @csrf_exempt
 @api_view(['GET'])
 # direccion
