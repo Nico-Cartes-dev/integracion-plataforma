@@ -17,6 +17,7 @@ namespace BuenosAires.BodegaBA
         public ConsultarBodega()
         {
             InitializeComponent();
+            this.Load += ConsultarBodega_Load;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -47,6 +48,27 @@ namespace BuenosAires.BodegaBA
                     var equipos = JsonConvert.DeserializeObject<List<StockItem>>(respuesta.JsonStockProducto);
                     dataGridView1.DataSource = equipos;
 
+                }
+                else
+                {
+                    MessageBox.Show(respuesta.Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al consultar el servicio: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void ConsultarBodega_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                var ws = new WsStockProductoClient();
+                var respuesta = ws.ObtenerEquiposEnBodega();
+                if (!respuesta.HayErrores)
+                {
+                    var equipos = JsonConvert.DeserializeObject<List<StockItem>>(respuesta.JsonStockProducto);
+                    dataGridView1.DataSource = equipos;
                 }
                 else
                 {
