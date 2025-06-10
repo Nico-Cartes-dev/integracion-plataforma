@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Newtonsoft.Json;
+using BuenosAires.BodegaBA.WsStockproductoreference;
+using BuenosAires.Model;
 namespace BuenosAires.BodegaBA
 {
     public partial class ConsultarBodega : Form
@@ -19,17 +21,42 @@ namespace BuenosAires.BodegaBA
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            new VentanaPrincipal().Show();
+            Hide();
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
+        }
+        public class StockItem
+        {
+            public int idstock { get; set; }
+            public string nomprod { get; set; }
+            public int? cantidad { get; set; }
+            public string estado { get; set; }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            try
+            {
+                var ws = new WsStockProductoClient();
+                var respuesta = ws.ObtenerEquiposEnBodega();
+                if (!respuesta.HayErrores)
+                {
+                    var equipos = JsonConvert.DeserializeObject<List<StockItem>>(respuesta.JsonStockProducto);
+                    dataGridView1.DataSource = equipos;
 
+                }
+                else
+                {
+                    MessageBox.Show(respuesta.Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al consultar el servicio: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

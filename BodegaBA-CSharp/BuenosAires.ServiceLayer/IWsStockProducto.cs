@@ -13,7 +13,6 @@ namespace BuenosAires.ServiceLayer
     public interface IWsStockProducto
     {
         [OperationContract]
-
-        Respuesta obtenerEquiposEnBodega();
+        Respuesta ObtenerEquiposEnBodega();
     }
 }

@@ -34,22 +34,19 @@ def obtener_equipos_en_bodega (request):
         data = []
         for row in resultados:
             idstock = row[0]
-            idproducto = row[1]
             nomprod = row[2]
-            nrofac = row[3]
+            cantidad = row[3]
             estado = row[4]
             data.append({
                 'idstock': idstock,
-                'idproducto': idproducto,
                 'nomprod': nomprod,
-                'nrofac': nrofac,
+                'cantidad': cantidad,
                 'estado': estado
             })
         return JsonResponse(data, safe=False)
 @csrf_exempt
 @api_view(['GET'])
-# direccion
-# http://127.0.0.1:8001/BuenosAiresApiRest/obtener_productos
+
 def obtener_productos(request):
     try:
         with connection.cursor() as cursor:

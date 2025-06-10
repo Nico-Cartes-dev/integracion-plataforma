@@ -48,9 +48,6 @@ namespace BuenosAires.ServiceLayer
             }
         }
 
-        public Respuesta obtenerEquiposEnBodega()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
