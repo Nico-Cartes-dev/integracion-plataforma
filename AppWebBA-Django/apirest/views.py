@@ -67,3 +67,35 @@ def obtener_productos(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
+
+@csrf_exempt
+@api_view(['GET'])
+def consultar_guias_despacho(request):
+    """
+    GET /api/guias-despacho/
+    Llama a SP_OBTENER_GUIAS_DE_DESPACHO y devuelve una lista de guías:
+      - nrogd
+      - nrofac
+      - idprod
+      - estadogd
+      - nomprod
+      - rutcli
+    """
+    try:
+        with connection.cursor() as cursor:
+            # Ejecuta el SP
+            cursor.execute("EXEC SP_OBTENER_GUIAS_DE_DESPACHO")
+            # Lee nombres de columnas
+            columns = [col[0] for col in cursor.description]
+            # Lee todas las filas
+            rows = cursor.fetchall()
+
+        # Mapea cada fila a un dict usando los nombres
+        guias = [dict(zip(columns, row)) for row in rows]
+
+        # Devuelve directamente la lista
+        return JsonResponse(guias, safe=False)
+
+    except Exception as e:
+        # Captura y reporta el error
+        return JsonResponse({'error': str(e)}, status=500)
