@@ -66,4 +66,6 @@ def obtener_productos(request):
             return JsonResponse({'productos': productos_list})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+    
+
 

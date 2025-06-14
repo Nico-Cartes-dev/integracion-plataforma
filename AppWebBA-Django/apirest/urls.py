@@ -5,4 +5,5 @@ urlpatterns = [
     path('autenticar/<str:tipousu>/<str:username>/<str:password>/', autenticar, name='autenticar'),
     path('obtener_equipos_en_bodega/', obtener_equipos_en_bodega, name='obtener_equipos_en_bodega'),
     path('obtener_productos/', obtener_productos, name='obtener_productos'),
+    #path('consultar_productos_disponibles', consultar_productos_disponibles, name='consultar_productos_disponibles'),
 ]
