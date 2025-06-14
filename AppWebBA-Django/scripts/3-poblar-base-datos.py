@@ -216,6 +216,43 @@ BEGIN
 END
 """
 
+
+SP_ACTUALIZAR_ESTADO_GUIA_DESPACHO = """
+CREATE PROCEDURE [dbo].[SP_ACTUALIZAR_ESTADO_GUIA_DESPACHO]
+    @p_nrogd INT,
+    @p_nuevo_estado VARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRANSACTION;
+    SAVE TRANSACTION sp_before_update;
+    
+    -- Actualizar el estado
+    UPDATE GuiaDespacho
+    SET estadogd = @p_nuevo_estado
+    WHERE nrogd = @p_nrogd;
+    
+    -- Retornar la guía actualizada con los datos del cliente
+    SELECT 
+        gd.nrogd,
+        gd.estadogd,
+        gd.nrofac,
+        (u.first_name + ' ' + u.last_name) AS NombreCliente,
+        p.nomprod as Producto
+    FROM GuiaDespacho AS gd
+    INNER JOIN Factura AS f ON gd.nrofac = f.nrofac
+    INNER JOIN PerfilUsuario AS pu ON f.rutcli = pu.rut
+    INNER JOIN auth_user AS u ON pu.user_id = u.id
+    INNER JOIN Producto AS p ON gd.idprod = p.idprod
+    WHERE gd.nrogd = @p_nrogd
+        AND pu.tipousu = 'Cliente';
+    
+    COMMIT TRANSACTION;
+END;
+"""
+
+
 def exec_sql(query):
     with connection.cursor() as cursor:
         cursor.execute(query)
@@ -335,6 +372,11 @@ def run():
 
     try:
         exec_sql(SP_OBTENER_GUIAS_DE_DESPACHO)
+    except:
+        pass
+
+    try:
+        exec_sql(SP_ACTUALIZAR_ESTADO_GUIA_DESPACHO)
     except:
         pass
 

@@ -31,10 +31,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Id_prod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Disponible = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -64,36 +60,11 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Id_prod,
-            this.nombre,
-            this.cantidad,
-            this.Disponible});
             this.dataGridView1.Location = new System.Drawing.Point(17, 294);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(1228, 308);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // Id_prod
-            // 
-            this.Id_prod.HeaderText = "Id prod";
-            this.Id_prod.Name = "Id_prod";
-            // 
-            // nombre
-            // 
-            this.nombre.HeaderText = "Nombre Producto";
-            this.nombre.Name = "nombre";
-            // 
-            // cantidad
-            // 
-            this.cantidad.HeaderText = "cantidad";
-            this.cantidad.Name = "cantidad";
-            // 
-            // Disponible
-            // 
-            this.Disponible.HeaderText = "Disponible";
-            this.Disponible.Name = "Disponible";
             // 
             // button1
             // 
@@ -141,10 +112,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id_prod;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Disponible;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label2;
     }

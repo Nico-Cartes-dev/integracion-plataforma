@@ -69,3 +69,50 @@ def obtener_productos(request):
     
 
 
+
+@csrf_exempt
+@api_view(['GET'])
+def consultar_guias_despacho(request):
+    """
+    GET /api/guias-despacho/
+    Llama a SP_OBTENER_GUIAS_DE_DESPACHO y devuelve una lista de guías:
+      - nrogd
+      - nrofac
+      - idprod
+      - estadogd
+      - nomprod
+      - rutcli
+    """
+    try:
+        with connection.cursor() as cursor:
+            # Ejecuta el SP
+            cursor.execute("EXEC SP_OBTENER_GUIAS_DE_DESPACHO")
+            # Lee nombres de columnas
+            columns = [col[0] for col in cursor.description]
+            # Lee todas las filas
+            rows = cursor.fetchall()
+
+        # Mapea cada fila a un dict usando los nombres
+        guias = [dict(zip(columns, row)) for row in rows]
+
+        # Devuelve directamente la lista
+        return JsonResponse(guias, safe=False)
+
+    except Exception as e:
+        # Captura y reporta el error
+        return JsonResponse({'error': str(e)}, status=500)
+
+def actualizar_estado_guia(request, nrogd, nuevo_estado):
+    """
+    Actualiza el estado de una Guía de Despacho llamando al procedimiento SP_ACTUALIZAR_ESTADO_GUIA_DESPACHO.
+    Se espera que 'nrogd' sea un número entero y 'nuevo_estado' una cadena, (Ej. 'Despachado' o 'Entregado').
+    """
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(f"EXEC SP_ACTUALIZAR_ESTADO_GUIA_DESPACHO @p_nrogd={nrogd}, @p_nuevo_estado='{nuevo_estado}'")
+            resultados = cursor.fetchall()
+            columns = [col[0] for col in cursor.description]
+            guia_actualizada = [dict(zip(columns, row)) for row in resultados]
+        return JsonResponse({'guia_actualizada': guia_actualizada})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500) 

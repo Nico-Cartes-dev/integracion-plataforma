@@ -73,12 +73,14 @@
     <Content Include="Web.config" />
     <Content Include="WsAnwo.svc" />
     <Content Include="WsAutenticacion.svc" />
+    <Content Include="WsGuiaDespacho.svc" />
     <Content Include="WsProducto.svc" />
     <Content Include="WsStockProducto.svc" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IWsAnwo.cs" />
     <Compile Include="IWsAutenticacion.cs" />
+    <Compile Include="IWsGuiaDespacho.cs" />
     <Compile Include="IWsProducto.cs" />
     <Compile Include="IWsStockProducto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,6 +89,9 @@
     </Compile>
     <Compile Include="WsAutenticacion.svc.cs">
       <DependentUpon>WsAutenticacion.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WsGuiaDespacho.svc.cs">
+      <DependentUpon>WsGuiaDespacho.svc</DependentUpon>
     </Compile>
     <Compile Include="WsProducto.svc.cs">
       <DependentUpon>WsProducto.svc</DependentUpon>
