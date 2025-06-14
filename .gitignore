@@ -10,3 +10,4 @@ BodegaBA-CSharp/.vs/BuenosAires/config/applicationhost.config
 /AppWebBA-Django/apirest/migrations/__pycache__
 AppWebBA-Django/AppWebBA/settings.py
 AppWebBA-Django/AppWebBA/settings.py
+*.cache

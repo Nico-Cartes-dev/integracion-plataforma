@@ -58,7 +58,8 @@ namespace BuenosAires.BodegaBA
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            new VentanaGuiasDespacho().Show();
+            Hide();
         }
 
         private void btnReservarEquipos_Click(object sender, EventArgs e)

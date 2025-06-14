@@ -157,3 +157,4 @@ F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\ob
 C:\BuenosAires\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Debug\BuenosAires.BodegaBA.VentanaLogin.resources
 C:\BuenosAires\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Debug\BuenosAires.BodegaBA.VentanaReservarAnwo.resources
 F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Debug\BuenosAires.BodegaBA.VentanaReservarAnwo.resources
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Debug\BuenosAires.BodegaBA.VentanaGuiasDespacho.resources
