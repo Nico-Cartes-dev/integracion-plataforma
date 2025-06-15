@@ -3,24 +3,8 @@
   "WorkspaceRootPath": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F45051A2-3661-44A1-A563-B6C94ABF25D5}|BuenosAires.BodegaBA\\BuenosAires.BodegaBA.csproj|f:\\int_plataforma\\integracion-plataforma\\bodegaba-csharp\\buenosaires.bodegaba\\consultarbodega.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F45051A2-3661-44A1-A563-B6C94ABF25D5}|BuenosAires.BodegaBA\\BuenosAires.BodegaBA.csproj|solutionrelative:buenosaires.bodegaba\\consultarbodega.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F45051A2-3661-44A1-A563-B6C94ABF25D5}|BuenosAires.BodegaBA\\BuenosAires.BodegaBA.csproj|F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\buenosaires.bodegaba\\ventanaguiasdespacho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F45051A2-3661-44A1-A563-B6C94ABF25D5}|BuenosAires.BodegaBA\\BuenosAires.BodegaBA.csproj|solutionrelative:buenosaires.bodegaba\\ventanaguiasdespacho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}|BuenosAires.ServiceLayer\\BuenosAires.ServiceLayer.csproj|F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\buenosaires.servicelayer\\iwsguiadespacho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}|BuenosAires.ServiceLayer\\BuenosAires.ServiceLayer.csproj|solutionrelative:buenosaires.servicelayer\\iwsguiadespacho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}|BuenosAires.ServiceLayer\\BuenosAires.ServiceLayer.csproj|F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\buenosaires.servicelayer\\wsguiadespacho.svc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}|BuenosAires.ServiceLayer\\BuenosAires.ServiceLayer.csproj|solutionrelative:buenosaires.servicelayer\\wsguiadespacho.svc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F45051A2-3661-44A1-A563-B6C94ABF25D5}|BuenosAires.BodegaBA\\BuenosAires.BodegaBA.csproj|F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\buenosaires.bodegaba\\ventanaguiasdespacho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{F45051A2-3661-44A1-A563-B6C94ABF25D5}|BuenosAires.BodegaBA\\BuenosAires.BodegaBA.csproj|solutionrelative:buenosaires.bodegaba\\ventanaguiasdespacho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}|BuenosAires.ServiceLayer\\BuenosAires.ServiceLayer.csproj|f:\\int_plataforma\\integracion-plataforma\\bodegaba-csharp\\buenosaires.servicelayer\\wsanwo.svc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}|BuenosAires.ServiceLayer\\BuenosAires.ServiceLayer.csproj|solutionrelative:buenosaires.servicelayer\\wsanwo.svc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,22 +14,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ConsultarBodega.cs",
-              "DocumentMoniker": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.BodegaBA\\ConsultarBodega.cs",
-              "RelativeDocumentMoniker": "BuenosAires.BodegaBA\\ConsultarBodega.cs",
-              "ToolTip": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.BodegaBA\\ConsultarBodega.cs",
-              "RelativeToolTip": "BuenosAires.BodegaBA\\ConsultarBodega.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAFQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-14T01:53:40.235Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
@@ -56,50 +26,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "VentanaGuiasDespacho.cs [Design]",
-              "DocumentMoniker": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.BodegaBA\\VentanaGuiasDespacho.cs",
-              "RelativeDocumentMoniker": "BuenosAires.BodegaBA\\VentanaGuiasDespacho.cs",
-              "ToolTip": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.BodegaBA\\VentanaGuiasDespacho.cs [Design]",
-              "RelativeToolTip": "BuenosAires.BodegaBA\\VentanaGuiasDespacho.cs [Design]",
+              "DocumentIndex": 0,
+              "Title": "WsAnwo.svc.cs",
+              "DocumentMoniker": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.ServiceLayer\\WsAnwo.svc.cs",
+              "RelativeDocumentMoniker": "BuenosAires.ServiceLayer\\WsAnwo.svc.cs",
+              "ToolTip": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.ServiceLayer\\WsAnwo.svc.cs",
+              "RelativeToolTip": "BuenosAires.ServiceLayer\\WsAnwo.svc.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAABUAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-14T02:04:38.785Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "WsGuiaDespacho.svc.cs",
-              "DocumentMoniker": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.ServiceLayer\\WsGuiaDespacho.svc.cs",
-              "RelativeDocumentMoniker": "BuenosAires.ServiceLayer\\WsGuiaDespacho.svc.cs",
-              "ToolTip": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.ServiceLayer\\WsGuiaDespacho.svc.cs",
-              "RelativeToolTip": "BuenosAires.ServiceLayer\\WsGuiaDespacho.svc.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T20:20:28.534Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IWsGuiaDespacho.cs",
-              "DocumentMoniker": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.ServiceLayer\\IWsGuiaDespacho.cs",
-              "RelativeDocumentMoniker": "BuenosAires.ServiceLayer\\IWsGuiaDespacho.cs",
-              "ToolTip": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.ServiceLayer\\IWsGuiaDespacho.cs",
-              "RelativeToolTip": "BuenosAires.ServiceLayer\\IWsGuiaDespacho.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T20:19:14.343Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "VentanaGuiasDespacho.cs",
-              "DocumentMoniker": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.BodegaBA\\VentanaGuiasDespacho.cs",
-              "RelativeDocumentMoniker": "BuenosAires.BodegaBA\\VentanaGuiasDespacho.cs",
-              "ToolTip": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.BodegaBA\\VentanaGuiasDespacho.cs",
-              "RelativeToolTip": "BuenosAires.BodegaBA\\VentanaGuiasDespacho.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T20:09:39.317Z"
+              "WhenOpened": "2025-06-15T02:17:29.872Z",
+              "EditorCaption": ""
             }
           ]
         }

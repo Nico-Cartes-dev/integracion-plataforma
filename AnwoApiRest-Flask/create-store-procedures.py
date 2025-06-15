@@ -1,7 +1,8 @@
 import pyodbc
 import os
 
-conn_str = conn_str = 'DRIVER=ODBC Driver 17 for SQL Server; SERVER=PCROBERTO\\SQLEXPRESS; DATABASE=base_datos; UID=sa; PWD=123;'
+pc="NICO"
+conn_str = f'DRIVER=ODBC Driver 17 for SQL Server; SERVER={pc}\\SQLEXPRESS; DATABASE=base_datos; UID=sa; PWD=123;'
 
 # Crear un Stored Procedure (SP)
 def eliminar_y_recompilar_sp(nombre_sp, cuerpo_sp):

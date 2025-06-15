@@ -61,6 +61,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\WsAnwoReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\WsAutenticacionReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -87,11 +92,11 @@
     <Compile Include="ConsultarBodega.Designer.cs">
       <DependentUpon>ConsultarBodega.cs</DependentUpon>
     </Compile>
-    <Compile Include="ReservarAnwo.cs">
+    <Compile Include="ReservarAnwo2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ReservarAnwo.Designer.cs">
-      <DependentUpon>ReservarAnwo.cs</DependentUpon>
+    <Compile Include="ReservarAnwo2.Designer.cs">
+      <DependentUpon>ReservarAnwo2.cs</DependentUpon>
     </Compile>
     <Compile Include="ScAutenticacion.cs" />
     <Compile Include="ScProducto.cs" />
@@ -136,8 +141,8 @@
     <EmbeddedResource Include="ConsultarBodega.resx">
       <DependentUpon>ConsultarBodega.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ReservarAnwo.resx">
-      <DependentUpon>ReservarAnwo.cs</DependentUpon>
+    <EmbeddedResource Include="ReservarAnwo2.resx">
+      <DependentUpon>ReservarAnwo2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VentanaBuscarID.resx">
       <DependentUpon>VentanaBuscarID.cs</DependentUpon>
@@ -166,6 +171,16 @@
     <EmbeddedResource Include="VentanaReservarAnwo.resx">
       <DependentUpon>VentanaReservarAnwo.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Connected Services\WsAnwoReference\WsAnwo.wsdl" />
+    <None Include="Connected Services\WsAnwoReference\WsAnwo.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WsAnwoReference\WsAnwo1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WsAnwoReference\WsAnwo2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\WsAutenticacionReference\WsAutenticacion.wsdl" />
     <None Include="Connected Services\WsAutenticacionReference\WsAutenticacion.xsd">
       <SubType>Designer</SubType>
@@ -235,6 +250,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\WsAnwoReference\" />
     <WCFMetadataStorage Include="Connected Services\WsAutenticacionReference\" />
     <WCFMetadataStorage Include="Connected Services\WsGuiaDespacho\" />
     <WCFMetadataStorage Include="Connected Services\WsProductoReference\" />
@@ -296,6 +312,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\WsGuiaDespacho\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsAnwoReference\WsAnwo.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsAnwoReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsAnwoReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsAnwoReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

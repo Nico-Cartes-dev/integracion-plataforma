@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="ba75e6d2-a0c3-43fd-8911-279858cfd523" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="0c78c75c-b250-4d07-9031-39d45208d2b9" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,11 +22,11 @@
     <MetadataSource Address="http://localhost:50397/WsAnwo.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="WsAnwo.disco" MetadataType="Disco" ID="7565e8fd-6d74-49dd-a459-30c26270b809" SourceId="1" SourceUrl="http://localhost:50397/WsAnwo.svc?disco" />
-    <MetadataFile FileName="WsAnwo.wsdl" MetadataType="Wsdl" ID="85028051-04ec-4aa1-8d45-70329e94a2f5" SourceId="1" SourceUrl="http://localhost:50397/WsAnwo.svc?wsdl" />
-    <MetadataFile FileName="WsAnwo1.xsd" MetadataType="Schema" ID="3c90b1f0-9e0e-43f2-9f85-9b994a9f2446" SourceId="1" SourceUrl="http://localhost:50397/WsAnwo.svc?xsd=xsd2" />
-    <MetadataFile FileName="WsAnwo11.xsd" MetadataType="Schema" ID="a1407d98-2c17-47ab-92bf-b6da69d1da44" SourceId="1" SourceUrl="http://localhost:50397/WsAnwo.svc?xsd=xsd1" />
-    <MetadataFile FileName="WsAnwo.xsd" MetadataType="Schema" ID="f8c885d8-a17d-4ac7-afce-3be5f89a756f" SourceId="1" SourceUrl="http://localhost:50397/WsAnwo.svc?xsd=xsd0" />
+    <MetadataFile FileName="WsAnwo.disco" MetadataType="Disco" ID="4c02c4ce-a6e8-4b89-b0b9-4986ec663104" SourceId="1" SourceUrl="http://localhost:50397/WsAnwo.svc?disco" />
+    <MetadataFile FileName="WsAnwo.wsdl" MetadataType="Wsdl" ID="370d4199-fcd5-4478-a7dc-fc8e2a25bbbb" SourceId="1" SourceUrl="http://localhost:50397/WsAnwo.svc?wsdl" />
+    <MetadataFile FileName="WsAnwo.xsd" MetadataType="Schema" ID="2838018c-248a-4646-87f2-15400f13fa8a" SourceId="1" SourceUrl="http://localhost:50397/WsAnwo.svc?xsd=xsd2" />
+    <MetadataFile FileName="WsAnwo1.xsd" MetadataType="Schema" ID="06194e12-c677-4392-bb9b-30e35dd0aebb" SourceId="1" SourceUrl="http://localhost:50397/WsAnwo.svc?xsd=xsd1" />
+    <MetadataFile FileName="WsAnwo2.xsd" MetadataType="Schema" ID="365b4a3c-9a10-47af-add1-7edfdcf7388f" SourceId="1" SourceUrl="http://localhost:50397/WsAnwo.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

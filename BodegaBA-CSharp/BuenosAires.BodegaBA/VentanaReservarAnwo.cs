@@ -12,6 +12,7 @@ using BuenosAires.Model.Utiles;
 using Newtonsoft.Json;
 using BuenosAires.BodegaBA.WsAnwoReference;
 
+
 namespace BuenosAires.BodegaBA
 {
     public partial class VentanaReservarAnwo : Form
