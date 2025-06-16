@@ -1,28 +1,19 @@
 {% extends 'core/base.html' %}
-{% load static %}
 
-{% block stylesheet %}
-    <link href="{% static 'core/css/perfil_usuario.css'%}" rel="stylesheet">
+{% block title %}
+    <title>Actualizar Perfil de Usuario</title>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="form-container">
-                <h2 class="form-title">Actualizar Perfil de Usuario</h2>
-                <form method="POST">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <div class="text-center mt-3">
-                        <button type="submit" class="btn btn-primary px-5">Actualizar datos de perfil</button>
-                    </div>
-                    {% if mesg %}
-                        <div id="form_message" class="alert alert-danger mt-3" role="alert">{{ mesg }}</div>
-                    {% endif %}
-                </form>
-            </div>
-        </div>
-    </div>
+<div class="container mt-4">
+    <h2>Actualizar Perfil de Usuario</h2>
+    {% if mesg %}
+        <div class="alert alert-success">{{ mesg }}</div>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Actualizar datos de perfil</button>
+    </form>
 </div>
-{% endblock content %}
+{% endblock %}
