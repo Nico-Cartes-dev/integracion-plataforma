@@ -503,3 +503,37 @@ def facturas(request):
         return redirect('home')
     
     return render(request, 'core/facturas.html', {'facturas': facturas})
+
+
+@login_required
+def ingresar_solicitud_servicio(request):
+    if request.method == 'POST':
+        # Extract form data
+        precio = request.POST.get('precio')
+        tipo_solicitud = request.POST.get('tipo_solicitud')
+        descripcion = request.POST.get('descripcion')
+        fecha_visita = request.POST.get('fecha_visita')
+        hora_visita = request.POST.get('hora_visita')
+
+        # Call the payment function
+        payment_successful = iniciar_pago(precio, request.user.username)
+
+        if payment_successful:  # Proceed only if payment is successful
+            # Call stored procedure to create service request
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    f"EXEC SP_CREAR_SOLICITUD_SERVICIO @precio={precio}, @tipo_solicitud='{tipo_solicitud}', @descripcion='{descripcion}', @fecha_visita='{fecha_visita}', @hora_visita='{hora_visita}', @cliente_id='{request.user.perfilusuario.rut}'"
+                )
+
+            # Call stored procedure to create invoice
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    f"EXEC SP_CREAR_FACTURA @cliente_id='{request.user.perfilusuario.rut}', @monto={precio}"
+                )
+
+            return render(request, 'core/ingresar_solicitud_servicio.html', {'success': True})
+
+        else:
+            return render(request, 'core/ingresar_solicitud_servicio.html', {'error': 'El pago no fue exitoso.'})
+
+    return render(request, 'core/ingresar_solicitud_servicio.html')

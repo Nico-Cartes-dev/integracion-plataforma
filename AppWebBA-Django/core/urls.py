@@ -9,7 +9,7 @@ from .views import (
     home, administrar_productos, tienda, ficha, iniciar_sesion,
     registrar_usuario, cerrar_sesion, perfil_usuario, iniciar_pago,
     pago_exitoso, obtener_solicitudes_de_servicio, mis_compras,
-    mis_solicitudes, facturas
+    mis_solicitudes, facturas, ingresar_solicitud_servicio
 )
 
 urlpatterns = [
@@ -54,5 +54,7 @@ urlpatterns = [
     
     # Administrador views
     path('facturas/', facturas, name='facturas'),  # For admin to see all invoices
+    
+    path('ingresar_solicitud_servicio/', ingresar_solicitud_servicio, name='ingresar_solicitud_servicio'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

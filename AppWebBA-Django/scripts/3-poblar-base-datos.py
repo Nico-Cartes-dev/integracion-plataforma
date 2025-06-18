@@ -252,6 +252,79 @@ BEGIN
 END;
 """
 
+SP_CREAR_SOLICITUD_SERVICIO = """
+CREATE PROCEDURE [dbo].[SP_CREAR_SOLICITUD_SERVICIO]
+    @precio INT,
+    @tipo_solicitud NVARCHAR(100),
+    @descripcion NVARCHAR(100),
+    @fecha_visita DATE,
+    @hora_visita TIME,
+    @cliente_id NVARCHAR(40)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Ensure a corresponding Factura exists
+    DECLARE @new_nrofac INT;
+    SELECT @new_nrofac = ISNULL(MAX(nrofac), 0) + 1 FROM Factura;
+
+    INSERT INTO Factura (nrofac, rutcli, idprod, fechafac, descfac, monto)
+    VALUES (
+        @new_nrofac,
+        @cliente_id,
+        1, -- Replace with a valid idprod value
+        GETDATE(),
+        'Factura generada automáticamente',
+        @precio
+    );
+
+    -- Generate a new value for nrosol
+    DECLARE @new_nrosol INT;
+    SELECT @new_nrosol = ISNULL(MAX(nrosol), 0) + 1 FROM SolicitudServicio;
+
+    -- Insert the new SolicitudServicio record
+    INSERT INTO SolicitudServicio (nrosol, tiposol, fechavisita, descsol, estadosol, nrofac, ruttec)
+    VALUES (
+        @new_nrosol,
+        @tipo_solicitud,
+        @fecha_visita,
+        @descripcion,
+        'Aceptada', -- Default value for estadosol
+        @new_nrofac,
+        @cliente_id
+    );
+END;
+"""
+
+SP_CREAR_FACTURA = """
+CREATE PROCEDURE [dbo].[SP_CREAR_FACTURA]
+    @cliente_id NVARCHAR(40),
+    @monto INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Generate a new value for nrofac
+    DECLARE @new_nrofac INT;
+    SELECT @new_nrofac = ISNULL(MAX(nrofac), 0) + 1 FROM Factura;
+
+    -- Retrieve a valid idprod value
+    DECLARE @valid_idprod INT;
+    SELECT TOP 1 @valid_idprod = idprod FROM Producto ORDER BY idprod;
+
+    -- Insert the new Factura record
+    INSERT INTO Factura (nrofac, rutcli, idprod, fechafac, descfac, monto)
+    VALUES (
+        @new_nrofac,
+        @cliente_id,
+        @valid_idprod, -- Ensure idprod is valid
+        GETDATE(),
+        'Factura generada automáticamente',
+        @monto
+    );
+END;
+"""
+
 
 def exec_sql(query):
     with connection.cursor() as cursor:
@@ -379,5 +452,16 @@ def run():
         exec_sql(SP_ACTUALIZAR_ESTADO_GUIA_DESPACHO)
     except:
         pass
+
+    # Execute stored procedures
+    try:
+        exec_sql(SP_CREAR_SOLICITUD_SERVICIO)
+    except Exception as e:
+        print(f"Error creating SP_CREAR_SOLICITUD_SERVICIO: {e}")
+
+    try:
+        exec_sql(SP_CREAR_FACTURA)
+    except Exception as e:
+        print(f"Error creating SP_CREAR_FACTURA: {e}")
 
 
