@@ -62,15 +62,15 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(17, 294);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1228, 308);
+            this.dataGridView1.Size = new System.Drawing.Size(1228, 265);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(565, 661);
+            this.button1.Location = new System.Drawing.Point(541, 591);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(148, 23);
+            this.button1.Size = new System.Drawing.Size(175, 45);
             this.button1.TabIndex = 3;
             this.button1.Text = "Volver al menu principal";
             this.button1.UseVisualStyleBackColor = true;
@@ -81,11 +81,11 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(518, 198);
+            this.label2.Location = new System.Drawing.Point(416, 89);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(247, 31);
+            this.label2.Size = new System.Drawing.Size(415, 31);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Guias de despacho";
+            this.label2.Text = "Productos Disponible en Bodego ";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // ConsultarBodega

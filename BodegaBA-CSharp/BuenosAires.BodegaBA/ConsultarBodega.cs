@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using BuenosAires.BodegaBA.WsStockproductoreference;
 using BuenosAires.Model;
+
 namespace BuenosAires.BodegaBA
 {
     public partial class ConsultarBodega : Form
@@ -29,6 +30,7 @@ namespace BuenosAires.BodegaBA
         private void label2_Click(object sender, EventArgs e)
         {
         }
+
         public class StockItem
         {
             public int idstock { get; set; }
@@ -48,6 +50,12 @@ namespace BuenosAires.BodegaBA
                     var equipos = JsonConvert.DeserializeObject<List<StockItem>>(respuesta.JsonStockProducto);
                     dataGridView1.DataSource = equipos;
 
+                    // ——————————————————————————————
+                    // Estas dos líneas hacen que el grid:
+                    // 1) Rellene todo el formulario (Dock = Fill)
+                    // 2) Ajuste las columnas al ancho disponible
+                    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    // ——————————————————————————————
                 }
                 else
                 {
@@ -59,6 +67,7 @@ namespace BuenosAires.BodegaBA
                 MessageBox.Show("Error al consultar el servicio: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void ConsultarBodega_Load(object sender, EventArgs e)
         {
             try
@@ -69,6 +78,11 @@ namespace BuenosAires.BodegaBA
                 {
                     var equipos = JsonConvert.DeserializeObject<List<StockItem>>(respuesta.JsonStockProducto);
                     dataGridView1.DataSource = equipos;
+
+                    // ——————————————————————————————
+                    // Aquí también añadimos Dock y AutoSizeColumnsMode
+                    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    // ——————————————————————————————
                 }
                 else
                 {
