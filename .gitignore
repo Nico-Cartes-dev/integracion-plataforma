@@ -10,5 +10,8 @@ BodegaBA-CSharp/.vs/BuenosAires/config/applicationhost.config
 /AppWebBA-Django/apirest/migrations/__pycache__
 AppWebBA-Django/AppWebBA/settings.py
 AppWebBA-Django/AppWebBA/settings.py
+<<<<<<< HEAD
 *.cache
 /BodegaBA-CSharp/.vs
+=======
+>>>>>>> parent of 5ac25ba (api Guias de despacho(Funcionando)))
