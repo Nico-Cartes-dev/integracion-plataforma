@@ -16,9 +16,9 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+
 public class XmlSerializer {
-    
-    public static String serialize(Object object) throws JAXBException {
+        public static String serialize(Object object) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(object.getClass());
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);

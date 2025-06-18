@@ -18,8 +18,8 @@
     </target>
     <target name="wsimport-client-WsAutenticacion" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/WsAutenticacion"/>
-        <property name="wsdl-WsAutenticacion" location="xml-resources/web-service-references/WsAutenticacion/wsdl/localhost_54096/WsAutenticacion.svc.singlewsdl.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/WsAutenticacion" destdir="${build.generated.dir}/jax-wsCache/WsAutenticacion" wsdl="${wsdl-WsAutenticacion}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:54096/WsAutenticacion.svc?singleWsdl" xnocompile="true" xendorsed="true" package="buenosaires.proxy">
+        <property name="wsdl-WsAutenticacion" location="xml-resources/web-service-references/WsAutenticacion/wsdl/localhost_50397/WsAutenticacion.svc.singlewsdl.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/WsAutenticacion" destdir="${build.generated.dir}/jax-wsCache/WsAutenticacion" wsdl="${wsdl-WsAutenticacion}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:50397/WsAutenticacion.svc?singleWsdl" xnocompile="true" xendorsed="true" package="buenosaires.proxy">
             <depends file="${wsdl-WsAutenticacion}"/>
             <produces dir="${build.generated.dir}/jax-wsCache/WsAutenticacion"/>
         </wsimport>

@@ -6,8 +6,8 @@ import java.util.Map;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+
 public class JsonSerializer {
-    
     private static final Gson gson = new Gson();
 
     /**
@@ -49,4 +49,5 @@ public class JsonSerializer {
     public static <T> T deserialize(String json, Class<T> clazz) {
         return gson.fromJson(json, clazz);
     }
+
 }

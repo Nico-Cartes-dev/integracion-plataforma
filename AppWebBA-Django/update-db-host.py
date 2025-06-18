@@ -7,7 +7,8 @@ if len(sys.argv) != 2:
 nuevo_host = sys.argv[1]
 
 # --- Reemplazo en settings.py ---
-ruta_settings = r"C:\BuenosAires\integracion-plataforma\AppWebBA-Django\AppWebBA\settings.py"
+ruta_settings = r"C:\BuenosAires2\AppWebBA-Django\AppWebBA\settings.py" #PC Luciano
+#ruta_settings = r"C:\BuenosAires\integracion-plataforma\AppWebBA-Django\AppWebBA\settings.py"
 # ruta_settings = r"F:\int_plataforma\integracion-plataforma\AppWebBA-Django\AppWebBA\settings.py"
 with open(ruta_settings, 'r', encoding='utf-8') as f:
     contenido = f.read()

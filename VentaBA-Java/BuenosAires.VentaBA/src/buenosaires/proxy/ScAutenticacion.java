@@ -1,10 +1,11 @@
 package buenosaires.proxy;
 
+
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 public class ScAutenticacion {
-    
+
     private boolean autenticado;
     private String nombreUsuario;
     private String tipoUsuario;
@@ -48,33 +49,33 @@ public class ScAutenticacion {
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
-    
+
     public void ejecutarPruebas() {
         //Acceder al Web Service
         WsAutenticacion ws = new WsAutenticacion();
         IWsAutenticacion port = ws.getBasicHttpBindingIWsAutenticacion();
-        
+
         // Probar con una cuenta de Vendedor
         Respuesta resp1 = port.autenticar("Vendedor", "bgates", "123");
         String json1 = resp1.getJsonAutenticado().getValue();
         System.out.println(json1);
-        
+
         // Probar con una cuenta de Administrador
         Respuesta resp2 = port.autenticar("Administrador", "emusk", "123");
         String json2 = resp2.getJsonAutenticado().getValue();
         System.out.println(json2);
-        
+
         // Probar con una cuenta de Bodeguero
         Respuesta resp3 = port.autenticar("Bodeguero", "emusk", "123");
         String json3 = resp3.getJsonAutenticado().getValue();
         System.out.println(json3);
-        
+
         //Probar ScAutenticacion
         var bc = new ScAutenticacion();
         bc.autenticar("Vendedor", "bgates", "123");
         System.out.println(bc.toString());
     }
-    
+
     public void autenticar(String tipousu, String username, String password) {
         var ws = new WsAutenticacion();
         var port = ws.getBasicHttpBindingIWsAutenticacion();
@@ -82,18 +83,19 @@ public class ScAutenticacion {
         String jsonAutenticado = resp.getJsonAutenticado().getValue();
         Object jsonObject = JSONValue.parse(jsonAutenticado);
         JSONObject jsonAutenticacion = (JSONObject) jsonObject;
-        this.setAutenticado((Boolean)jsonAutenticacion.get("Autenticado"));
-        this.setNombreUsuario((String)jsonAutenticacion.get("NombreUsuario"));
-        this.setTipoUsuario((String)jsonAutenticacion.get("TipoUsuario"));
-        this.setMensaje((String)jsonAutenticacion.get("Mensaje"));
+        this.setAutenticado((Boolean) jsonAutenticacion.get("Autenticado"));
+        this.setNombreUsuario((String) jsonAutenticacion.get("NombreUsuario"));
+        this.setTipoUsuario((String) jsonAutenticacion.get("TipoUsuario"));
+        this.setMensaje((String) jsonAutenticacion.get("Mensaje"));
     }
 
     @Override
     public String toString() {
-        return "ScAutenticacion{" 
-                + "autenticado=" + autenticado 
-                + ", nombreUsuario=" + nombreUsuario 
-                + ", tipoUsuario=" + tipoUsuario 
+        return "ScAutenticacion{"
+                + "autenticado=" + autenticado
+                + ", nombreUsuario=" + nombreUsuario
+                + ", tipoUsuario=" + tipoUsuario
                 + ", mensaje=" + mensaje + '}';
     }
+
 }
