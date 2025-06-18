@@ -1,5 +1,8 @@
 package buenosaires.ventaba;
 
+//borrar este import, es para un demo
+import buenosaires.ventaba.VentanaConsultarBodega;
+
 import buenosaires.proxy.ScAutenticacion;
 import javax.swing.JOptionPane;
 
@@ -93,16 +96,24 @@ public class VentanaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        var bc = new ScAutenticacion();
-        bc.autenticar("Vendedor", txtCuenta.getText(), txtPassword.getText());
-        if (bc.isAutenticado()) {
-            JOptionPane.showMessageDialog(null, "AUTENTICADO"
-                , "Buenos Aires", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else {
-            JOptionPane.showMessageDialog(null, bc.getMensaje()
-                , "Buenos Aires", JOptionPane.INFORMATION_MESSAGE);
-        }
+        // Simulación: abre la ventana de bodega directamente
+        VentanaConsultarBodega ventanaBodega = new VentanaConsultarBodega();
+        ventanaBodega.setLocationRelativeTo(null);
+        ventanaBodega.setVisible(true);
+        this.dispose(); // cierra la ventana de login
+
+
+
+//        var bc = new ScAutenticacion();
+////        bc.autenticar("Vendedor", txtCuenta.getText(), txtPassword.getText());
+//        if (bc.isAutenticado()) {
+//            JOptionPane.showMessageDialog(null, "AUTENTICADO"
+//                , "Buenos Aires", JOptionPane.INFORMATION_MESSAGE);
+//        }
+//        else {
+//            JOptionPane.showMessageDialog(null, bc.getMensaje()
+//                , "Buenos Aires", JOptionPane.INFORMATION_MESSAGE);
+//        }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
