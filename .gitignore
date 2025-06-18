@@ -11,7 +11,10 @@ BodegaBA-CSharp/.vs/BuenosAires/config/applicationhost.config
 AppWebBA-Django/AppWebBA/settings.py
 AppWebBA-Django/AppWebBA/settings.py
 <<<<<<< HEAD
+<<<<<<< HEAD
 *.cache
 /BodegaBA-CSharp/.vs
+=======
+>>>>>>> parent of 5ac25ba (api Guias de despacho(Funcionando)))
 =======
 >>>>>>> parent of 5ac25ba (api Guias de despacho(Funcionando)))

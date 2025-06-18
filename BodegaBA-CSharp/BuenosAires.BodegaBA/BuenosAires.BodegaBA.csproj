@@ -66,11 +66,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Connected Services\WsAutenticacionReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+=======
+>>>>>>> parent of 5ac25ba (api Guias de despacho(Funcionando)))
     <Compile Include="Connected Services\WsProductoReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -286,6 +289,7 @@
     </None>
   </ItemGroup>
 <<<<<<< HEAD
+<<<<<<< HEAD
   <ItemGroup>
     <None Include="Connected Services\WsGuiaDespacho\WsGuiaDespacho.disco" />
   </ItemGroup>
@@ -316,6 +320,8 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+=======
+>>>>>>> parent of 5ac25ba (api Guias de despacho(Funcionando)))
 =======
 >>>>>>> parent of 5ac25ba (api Guias de despacho(Funcionando)))
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
