@@ -43,5 +43,3 @@ F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.DataLayer\o
 F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.DataLayer\obj\Debug\BuenosAi.A5F21D2D.Up2Date
 F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.DataLayer\obj\Debug\BuenosAires.DataLayer.dll
 F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.DataLayer\obj\Debug\BuenosAires.DataLayer.pdb
-C:\BuenosAires2\BodegaBA-CSharp\BuenosAires.DataLayer\obj\Debug\BuenosAires.DataLayer.csproj.AssemblyReference.cache
-C:\BuenosAires2\BodegaBA-CSharp\BuenosAires.DataLayer\obj\Debug\BuenosAires.DataLayer.csproj.CoreCompileInputs.cache

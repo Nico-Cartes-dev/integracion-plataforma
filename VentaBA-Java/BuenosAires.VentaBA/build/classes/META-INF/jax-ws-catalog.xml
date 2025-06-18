@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://localhost:54096/WsAutenticacion.svc?singleWsdl" uri="wsdl/localhost_54096/WsAutenticacion.svc.singlewsdl.wsdl"/>
-    <system systemId="http://localhost:50397" uri="xml-resources/web-service-references/localhost_50397/wsdl/localhost_50397"/>
-    <system systemId="http://localhost:50397/WsAutenticacion.svc" uri="wsdl/localhost_50397/WsAutenticacion.svc.xml"/>
-    <system systemId="file:/C:/BuenosAires/integracion-plataforma/VentaBA-Java/BuenosAires.VentaBA/WsAutenticacion.svc.wsdl" uri="xml-resources/web-service-references/WsAutenticacion.svc/wsdl/WsAutenticacion.svc.wsdl"/>
-    <system systemId="http://localhost:50397/WsAutenticacion.svc?wsdl" uri="wsdl/localhost_50397/WsAutenticacion.svc.wsdl"/>
-    <system systemId="http://localhost:50397/WsAutenticacion.svc?xsd=xsd0" uri="wsdl/localhost_50397/WsAutenticacion.svc.xsd_xsd0.xsd"/>
-    <system systemId="http://localhost:50397/WsAutenticacion.svc?xsd=xsd1" uri="wsdl/localhost_50397/WsAutenticacion.svc.xsd_xsd1.xsd"/>
-    <system systemId="http://localhost:50397/WsAutenticacion.svc?xsd=xsd2" uri="wsdl/localhost_50397/WsAutenticacion.svc.xsd_xsd2.xsd"/>
-    <system systemId="http://localhost:50397/WsAutenticacion.svc?singleWsdl" uri="wsdl/localhost_50397/WsAutenticacion.svc.singlewsdl.wsdl"/>
 </catalog>
