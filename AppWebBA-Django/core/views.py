@@ -1,7 +1,9 @@
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
+from django.http import HttpRequest
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 from .models import Producto, PerfilUsuario, SolicitudServicio, Factura
 from .forms import ProductoForm, IniciarSesionForm
 from .forms import RegistrarUsuarioForm, PerfilUsuarioForm
@@ -267,26 +269,31 @@ def perfil_usuario(request):
     if request.method == 'POST':
         form = PerfilUsuarioForm(request.POST)
         if form.is_valid():
+            # Update User fields
             user = request.user
-            user.first_name = request.POST.get("first_name")
-            user.last_name = request.POST.get("last_name")
-            user.email = request.POST.get("email")
+            user.first_name = form.cleaned_data.get("first_name")
+            user.last_name = form.cleaned_data.get("last_name")
+            user.email = form.cleaned_data.get("email")
             user.save()
+
+            # Update PerfilUsuario fields
             perfil = PerfilUsuario.objects.get(user=user)
-            perfil.rut = request.POST.get("rut")
-            perfil.tipousu = request.POST.get("tipousu")
-            perfil.dirusu = request.POST.get("dirusu")
+            perfil.rut = form.cleaned_data.get("rut")
+            perfil.dirusu = form.cleaned_data.get("dirusu")
             perfil.save()
+
             data["mesg"] = "¡Sus datos fueron actualizados correctamente!"
 
+    # Initialize form with current data
     perfil = PerfilUsuario.objects.get(user=request.user)
-    form = PerfilUsuarioForm()
-    form.fields['first_name'].initial = request.user.first_name
-    form.fields['last_name'].initial = request.user.last_name
-    form.fields['email'].initial = request.user.email
-    form.fields['rut'].initial = perfil.rut
-    form.fields['tipousu'].initial = perfil.tipousu
-    form.fields['dirusu'].initial = perfil.dirusu
+    form = PerfilUsuarioForm(initial={
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'email': request.user.email,
+        'rut': perfil.rut,
+        'tipousu': perfil.tipousu,  # Read-only field
+        'dirusu': perfil.dirusu
+    })
     data["form"] = form
     return render(request, "core/perfil_usuario.html", data)
 
@@ -408,28 +415,17 @@ def facturas(request):
         return redirect('iniciar_sesion')
 
     try:
+        # Obtener el perfil del usuario conectado
         perfil = PerfilUsuario.objects.get(user=request.user)
         rut_cliente = perfil.rut if perfil.tipousu != 'Administrador' else 'admin'
 
-        # Llamar al procedimiento almacenado SP_OBTENER_FACTURAS
-        with connection.cursor() as cursor:
-            cursor.callproc('SP_OBTENER_FACTURAS', [rut_cliente])
-            facturas = cursor.fetchall()
-            # Obtener nombres de columnas
-            columns = [col[0] for col in cursor.description]
-            # Convertir a lista de diccionarios
-            facturas = [dict(zip(columns, row)) for row in facturas]
+        # Obtener facturas usando el procedimiento almacenado
+        facturas = obtener_facturas(rut_cliente)
 
-        # Si el usuario es un cliente, obtener las guías de despacho
+        # Obtener guías de despacho si el usuario es un cliente
         guias_despacho = []
         if perfil.tipousu != 'Administrador':
-            with connection.cursor() as cursor:
-                cursor.callproc('SP_OBTENER_GUIAS_DE_DESPACHO')
-                guias_despacho = cursor.fetchall()
-                # Obtener nombres de columnas
-                columns = [col[0] for col in cursor.description]
-                # Convertir a lista de diccionarios
-                guias_despacho = [dict(zip(columns, row)) for row in guias_despacho]
+            guias_despacho = obtener_guias_despacho()
 
         context = {
             'facturas': facturas,
@@ -438,10 +434,140 @@ def facturas(request):
         }
         return render(request, 'core/facturas.html', context)
 
+    except PerfilUsuario.DoesNotExist:
+        return render(request, 'core/facturas.html', {
+            'error': 'No se encontró el perfil del usuario.',
+        })
+
     except Exception as e:
         logger.error(f"Error al obtener facturas: {str(e)}")
-        context = {
-            'error': 'Ocurrió un error al obtener las facturas',
-            'tipousu': getattr(perfil, 'tipousu', None)
-        }
-        return render(request, 'core/facturas.html', context)
+        return render(request, 'core/facturas.html', {
+            'error': 'Ocurrió un error inesperado al obtener las facturas.',
+        })
+
+
+def obtener_facturas(rut_cliente):
+    """Función auxiliar para obtener las facturas."""
+    with connection.cursor() as cursor:
+        cursor.callproc('SP_OBTENER_FACTURAS', [rut_cliente])
+        facturas = cursor.fetchall()
+        columns = [col[0] for col in cursor.description]
+        return [dict(zip(columns, row)) for row in facturas]
+
+def obtener_guias_despacho():
+    """Función auxiliar para obtener las guías de despacho."""
+    with connection.cursor() as cursor:
+        cursor.callproc('SP_OBTENER_GUIAS_DE_DESPACHO')
+        guias_despacho = cursor.fetchall()
+        columns = [col[0] for col in cursor.description]
+        return [dict(zip(columns, row)) for row in guias_despacho]
+
+@login_required
+def mis_compras(request):
+    if request.user.perfilusuario.tipousu != 'Cliente':
+        return redirect('home')
+    
+    facturas = Factura.objects.filter(rutcli=request.user.perfilusuario.rut)
+    return render(request, 'core/facturas.html', {'facturas': facturas})
+
+@login_required
+def mis_solicitudes(request):
+    if request.user.perfilusuario.tipousu != 'Cliente':
+        return redirect('home')
+    
+    solicitudes = SolicitudServicio.objects.filter(
+        factura__rutcli=request.user.perfilusuario.rut
+    )
+    return render(request, 'core/obtener_solicitudes_de_servicio.html', {'solicitudes': solicitudes})
+
+# @login_required
+# def perfil_usuario(request):
+#     if request.method == 'POST':
+#         form = PerfilUsuarioForm(request.POST, instance=request.user.perfilusuario)
+#         if form.is_valid():
+#             form.save()
+#             return render(request, 'core/perfil_usuario.html', {'form': form, 'success': True})
+#     else:
+#         form = PerfilUsuarioForm(instance=request.user.perfilusuario)
+#     return render(request, 'core/perfil_usuario.html', {'form': form})
+
+@login_required
+def obtener_solicitudes_de_servicio(request):
+    if request.user.perfilusuario.tipousu == 'Técnico':
+        # Mostrar solo solicitudes asignadas al técnico
+        solicitudes = SolicitudServicio.objects.filter(tecnico=request.user.perfilusuario)
+    elif request.user.perfilusuario.tipousu == 'Administrador':
+        # Mostrar todas las solicitudes
+        solicitudes = SolicitudServicio.objects.all()
+    else:
+        return redirect('home')
+    
+    return render(request, 'core/obtener_solicitudes_de_servicio.html', {'solicitudes': solicitudes})
+
+@login_required
+def facturas(request):
+    if request.user.perfilusuario.tipousu == 'Administrador':
+        # Mostrar todas las facturas para el administrador
+        facturas = Factura.objects.all()
+    else:
+        return redirect('home')
+    
+    return render(request, 'core/facturas.html', {'facturas': facturas})
+
+
+@login_required
+def ingresar_solicitud_servicio(request:HttpRequest):
+    # Get the user's purchased products
+    purchased_products = Factura.objects.filter(rutcli=request.user.perfilusuario.rut).values(
+        'idprod__idprod', 'idprod__nomprod'
+    )
+    if request.method == 'POST':
+        # Extract form data
+        selected_product_id = request.POST.get('selected_product')
+        tipo_solicitud = request.POST.get('tipo_solicitud')
+        descripcion = request.POST.get('descripcion',)
+        fecha_visita = request.POST.get('fecha_visita')
+        hora_visita = request.POST.get('hora_visita')
+
+        # Validate the selected product
+        if not selected_product_id:
+            return render(request, 'core/ingresar_solicitud_servicio.html', {
+                'error': 'Debe seleccionar un producto para el servicio.',
+                'purchased_products': purchased_products
+            })
+
+        # Get the product price
+        try:
+            producto = Producto.objects.get(idprod=selected_product_id)
+            precio = producto.precio
+        except Producto.DoesNotExist:
+            return render(request, 'core/ingresar_solicitud_servicio.html', {
+                'error': 'El producto seleccionado no existe.',
+                'purchased_products': purchased_products
+            })
+
+        # Call the payment function
+        payment_successful = iniciar_pago(request, id=selected_product_id)
+
+        if payment_successful:  # Proceed only if payment is successful
+            # Call stored procedure to create service request
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    f"EXEC SP_CREAR_SOLICITUD_SERVICIO @precio={precio}, @tipo_solicitud='{tipo_solicitud}', @descripcion='{descripcion}', @fecha_visita='{fecha_visita}', @hora_visita='{hora_visita}', @cliente_id='{request.user.perfilusuario.rut}'"
+                )
+
+            # Call stored procedure to create invoice
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    f"EXEC SP_CREAR_FACTURA @cliente_id='{request.user.perfilusuario.rut}', @monto={precio}"
+                )
+
+            return render(request, 'core/ingresar_solicitud_servicio.html', {'success': True})
+
+        else:
+            return render(request, 'core/ingresar_solicitud_servicio.html', {
+                'error': 'El pago no fue exitoso.',
+                'purchased_products': purchased_products
+            })
+
+    return render(request, 'core/ingresar_solicitud_servicio.html', {'purchased_products': purchased_products})

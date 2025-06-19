@@ -76,6 +76,7 @@
         <li class="nav-item"><a class="nav-link text-white" href="{% url 'tienda' %}">Tienda</a></li>
 
         {% if not user.is_authenticated %}
+          {% comment %} <li class="nav-item"><a class="nav-link text-white" href="{% url 'tienda' %}">Tienda</a></li> {% endcomment %}
           <li class="nav-item"><a class="nav-link text-white" href="{% url 'registrar_usuario' %}">Registrarse</a></li>
           <li class="nav-item"><a class="nav-link text-white" href="{% url 'iniciar_sesion' %}">Iniciar Sesión</a></li>
         {% endif %}
@@ -92,7 +93,67 @@
           <li class="nav-item"><a class="nav-link" href="{% url 'obtener_solicitudes_de_servicio' %}">Mis Solicitudes</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'perfil_usuario' %}">Mi Perfil</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'cambiar_password' %}">Cambiar Contraseña</a></li>
-          <li class="nav-item"><a class="nav-link text-danger" href="{% url 'cerrar_sesion' %}">Cerrar Sesión</a></li>
+          <li class="nav-item"><a class="nav-link text-danger" href="{% url 'cerrar_sesion' %}">Cerrar Sesión</a></li>          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav me-auto">
+                  {% if user.is_authenticated %}
+                      {% if user.perfilusuario.tipousu == 'Técnico' %}
+                          <li class="nav-item">
+                              <a class="nav-link" href="{% url 'home' %}">Inicio</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="{% url 'obtener_solicitudes_de_servicio' %}">Mis Solicitudes</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="{% url 'perfil_usuario' %}">Mis Datos</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="{% url 'cerrar_sesion' %}">Cerrar Sesión</a>
+                          </li>
+                      {% elif user.perfilusuario.tipousu == 'Administrador' %}
+                          <li class="nav-item">
+                              <a class="nav-link" href="{% url 'home' %}">Inicio</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="{% url 'facturas' %}">Historial de Ventas</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="{% url 'obtener_solicitudes_de_servicio' %}">Solicitudes de Servicios</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="{% url 'perfil_usuario' %}">Mis Datos</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="{% url 'cerrar_sesion' %}">Cerrar Sesión</a>
+                          </li>
+                      {% endif %}
+                  {% endif %}
+              </ul>
+          </div>
+        {% endif %}
+      </ul>
+
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+            {% if user.perfilusuario.tipousu == 'Cliente' %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'facturas' %}">Mis Compras</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'obtener_solicitudes' %}">Mis Solicitudes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'perfil_usuario' %}">Mis Datos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ingresar_solicitud_servicio' %}">Solicitud de Servicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cerrar_sesion' %}">Cerrar Sesión</a>
+                </li>
+            {% endif %}
         {% endif %}
       </ul>
     </div>

@@ -31,7 +31,12 @@ class PerfilUsuarioForm(Form):
     last_name = forms.CharField(max_length=150, required=True, label="Apellidos")
     email = forms.CharField(max_length=254, required=True, label="Correo")
     rut = forms.CharField(max_length=20, required=False, label="Rut")
-    tipousu = forms.CharField(max_length=50, required=True, label="Tipo de usuario")
+    tipousu = forms.CharField(
+    max_length=50,
+    required=True,
+    label="Tipo de usuario",
+    widget=forms.TextInput(attrs={'readonly': 'readonly','disabled': 'disabled'}))
+    # tipousu = forms.CharField(max_length=50, required=True, label="Tipo de usuario")
     dirusu = forms.CharField(max_length=300, required=False, label="Dirección")
 
     class Meta:
@@ -46,3 +51,4 @@ class SolicitudServicioForm(forms.Form):
     descripcion = forms.CharField(widget=forms.Textarea, label="Descripción")
     fecha_sugerida = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label="Fecha Sugerida")
     hora_sugerida = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}), label="Hora Sugerida")
+
