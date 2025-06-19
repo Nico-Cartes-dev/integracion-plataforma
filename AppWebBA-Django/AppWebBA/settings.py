@@ -109,12 +109,9 @@ DATABASES = {
         'NAME': 'base_datos',
         'USER': 'sa',
         'PASSWORD': '123',
-<<<<<<< Updated upstream
-        'HOST': 'NICO\\SQLEXPRESS',
-=======
         # 'HOST': 'DESKTOP-22H6NNU\\SQLEXPRESS',
-        'HOST': 'PCROBERTO\\SQLEXPRESS',
->>>>>>> Stashed changes
+        # 'HOST': 'PCROBERTO\\SQLEXPRESS',
+        'HOST': 'NICO\\SQLEXPRESS',
         'PORT': '',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
