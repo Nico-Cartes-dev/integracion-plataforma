@@ -41,6 +41,7 @@ class Factura(models.Model):
     fechafac = models.DateField(null=False, blank=False)
     descfac = models.CharField(max_length=300, null=False, blank=False)
     monto = models.IntegerField(null=False, blank=False)
+    # guiadespacho = models.ForeignKey(GuiaDespacho, null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
         db_table = 'Factura'

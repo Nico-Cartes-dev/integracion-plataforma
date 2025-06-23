@@ -14,22 +14,66 @@
                 <thead>
                     <tr>
                         <th>Nº Factura</th>
+                        <th>Cliente</th>
                         <th>Fecha</th>
-                        <th>Producto</th>
-                        <th>Descripción</th>
+                        <th>descripcion</th>
                         <th>Monto</th>
-                        <th>Estado Despacho</th>
+                        <th>Nro GB</th>
+                        <th>Estado Guia</th>
+                        <th>Nro SS</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for factura in facturas %}
                         <tr>
                             <td>{{ factura.nrofac }}</td>
+                            <td>{{ factura.rutcli }}</td>
                             <td>{{ factura.fechafac }}</td>
-                            <td>{{ factura.nomprod }}</td>
                             <td>{{ factura.descfac }}</td>
                             <td>${{ factura.monto|floatformat:0 }}</td>
-                            <td>{{ factura.estado_despacho }}</td>
+                            <td>
+                                {% if factura.guiadespacho_set.all %}
+                                    {% for guia in factura.guiadespacho_set.all %}
+                                        {{ guia.nrogd }}
+                                    {% empty %}
+                                        -
+                                    {% endfor %}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if factura.guiadespacho_set.all %}
+                                    {% for guia in factura.guiadespacho_set.all %}
+                                        {{ guia.estadogd }}
+                                    {% empty %}
+                                        -
+                                    {% endfor %}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if factura.guiadespacho_set.all %}
+                                    {% for guia in factura.guiadespacho_set.all %}
+                                        {% with solicitudes=guia.nrofac.solicitudservicio_set.all %}
+                                            {% if solicitudes %}
+                                                {% for solicitud in solicitudes %}
+                                                    {{ solicitud.nrosol }}
+                                                {% empty %}
+                                                    -
+                                                {% endfor %}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        {% endwith %}
+                                    {% empty %}
+                                        -
+                                    {% endfor %}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

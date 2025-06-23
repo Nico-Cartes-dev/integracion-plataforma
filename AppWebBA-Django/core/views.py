@@ -48,7 +48,10 @@ def cerrar_sesion(request):
     return redirect(home)
 
 def tienda(request):
-    data = {"list": Producto.objects.all().order_by('idprod')}
+    data = {
+        "list": Producto.objects.all().order_by('idprod'),
+        "active_page": "tienda"
+    }
     return render(request, "core/tienda.html", data)
 
 # https://www.transbankdevelopers.cl/documentacion/como_empezar#como-empezar
@@ -156,20 +159,61 @@ def iniciar_pago(request, id):
 
 @csrf_exempt
 def pago_exitoso(request):
-
     if request.method == "GET":
         token = request.GET.get("token_ws")
-        print("commit for token_ws: {}".format(token))
         commercecode = "597055555532"
         apikey = "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C"
         tx = Transaction(options=WebpayOptions(commerce_code=commercecode, api_key=apikey, integration_type="TEST"))
         response = tx.commit(token=token)
-        print("response: {}".format(response))
 
         user = User.objects.get(username=response['session_id'])
         perfil = PerfilUsuario.objects.get(user=user)
-        form = PerfilUsuarioForm()
 
+        # --- FLUJO DE SOLICITUD DE SERVICIO ---
+        if response['response_code'] == 0 and request.session.get('servicio_tipo_solicitud'):
+            tipo_solicitud = request.session.get('servicio_tipo_solicitud')
+            descripcion = request.session.get('servicio_descripcion')
+            fecha_visita = request.session.get('servicio_fecha_visita')
+            tecnico_rut = request.session.get('servicio_tecnico_rut')
+            precio = request.session.get('servicio_precio')
+
+            tecnico = None
+            if tecnico_rut:
+                try:
+                    tecnico = PerfilUsuario.objects.get(rut=tecnico_rut)
+                except PerfilUsuario.DoesNotExist:
+                    tecnico = None
+
+            # 1. Crear la factura usando tu SP
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "EXEC SP_CREAR_FACTURA @rutcli=%s, @idprod=%s, @monto=%s, @descfac=%s",
+                    [perfil.rut, None, precio, 'Solicitud de servicio']
+                )
+                nrofac_num = cursor.fetchone()[0]  # Recupera el nrofac generado
+
+            # 2. Obtener la instancia de Factura
+            factura = Factura.objects.get(nrofac=nrofac_num)
+
+            # 3. Crear la solicitud de servicio
+            SolicitudServicio.objects.create(
+                nrofac=factura,
+                tiposol=tipo_solicitud,
+                fechavisita=fecha_visita,
+                ruttec=tecnico,
+                descsol=descripcion,
+                estadosol='Pendiente'
+            )
+
+            # Limpia la sesión si quieres
+            for key in [
+                'servicio_tipo_solicitud', 'servicio_descripcion', 'servicio_fecha_visita',
+                'servicio_tecnico_rut', 'servicio_precio'
+            ]:
+                if key in request.session:
+                    del request.session[key]
+
+        # ...tu contexto y render...
         context = {
             "buy_order": response['buy_order'],
             "session_id": response['session_id'],
@@ -193,7 +237,14 @@ def administrar_productos(request, action, id):
     if not (request.user.is_authenticated and request.user.is_staff):
         return redirect(home)
 
-    data = {"mesg": "", "form": ProductoForm, "action": action, "id": id, "formsesion": IniciarSesionForm}
+    data = {
+    "mesg": "",
+    "form": ProductoForm,
+    "action": action,
+    "id": id,
+    "formsesion": IniciarSesionForm,
+    "active_page": "administrar_productos"
+}
 
     if action == 'ins':
         if request.method == "POST":
@@ -223,7 +274,7 @@ def administrar_productos(request, action, id):
             data["mesg"] = "¡El producto ya estaba eliminado!"
 
     data["list"] = Producto.objects.all().order_by('idprod')
-    return render(request, "core/administrar_productos.html", data)
+    return render(request, "core/administrar_productos.html", data, )
 
 def registrar_usuario(request):
     if request.method == 'POST':
@@ -260,47 +311,62 @@ def registrar_usuario(request):
     
     return render(request, "core/registrar_usuario.html", {
         'form': form,
-        'titulo': 'Registro de Cliente Nuevo'
+        'titulo': 'Registro de Cliente Nuevo',
+        'active_page': 'registrar_usuario'
     })
 
+
+
 def perfil_usuario(request):
-    data = {"mesg": "", "form": PerfilUsuarioForm}
+    data = {"mesg": ""}
 
     if request.method == 'POST':
         form = PerfilUsuarioForm(request.POST)
         if form.is_valid():
-            # Update User fields
             user = request.user
-            user.first_name = form.cleaned_data.get("first_name")
-            user.last_name = form.cleaned_data.get("last_name")
-            user.email = form.cleaned_data.get("email")
+            user.first_name = form.cleaned_data['first_name']
+            user.last_name = form.cleaned_data['last_name']
+            user.email = form.cleaned_data['email']
             user.save()
 
-            # Update PerfilUsuario fields
             perfil = PerfilUsuario.objects.get(user=user)
-            perfil.rut = form.cleaned_data.get("rut")
-            perfil.dirusu = form.cleaned_data.get("dirusu")
+            perfil.rut = form.cleaned_data['rut']
+            perfil.dirusu = form.cleaned_data['dirusu']
+            perfil.tipousu = form.cleaned_data['tipousu'] 
             perfil.save()
 
             data["mesg"] = "¡Sus datos fueron actualizados correctamente!"
 
-    # Initialize form with current data
-    perfil = PerfilUsuario.objects.get(user=request.user)
-    form = PerfilUsuarioForm(initial={
-        'first_name': request.user.first_name,
-        'last_name': request.user.last_name,
-        'email': request.user.email,
-        'rut': perfil.rut,
-        'tipousu': perfil.tipousu,  # Read-only field
-        'dirusu': perfil.dirusu
-    })
+            # Mostrar el formulario con datos actualizados
+            form = PerfilUsuarioForm(initial={
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email,
+                'rut': perfil.rut,
+                'tipousu': perfil.tipousu,
+                'dirusu': perfil.dirusu
+            })
+    else:
+        user = request.user
+        perfil = PerfilUsuario.objects.get(user=user)
+        form = PerfilUsuarioForm(initial={
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
+            'rut': perfil.rut,
+            'tipousu': perfil.tipousu,
+            'dirusu': perfil.dirusu
+        })
+
     data["form"] = form
+    data["active_page"] = "perfil_usuario"
     return render(request, "core/perfil_usuario.html", data)
 
-def obtener_solicitudes_de_servicio(request):
-    tipousu = PerfilUsuario.objects.get(user=request.user).tipousu
-    data = {'tipousu': tipousu }
-    return render(request, "core/obtener_solicitudes_de_servicio.html", data)
+# #*
+# def obtener_solicitudes_de_servicio(request):
+#     tipousu = PerfilUsuario.objects.get(user=request.user).tipousu
+#     data = {'tipousu': tipousu }
+#     return render(request, "core/obtener_solicitudes_de_servicio.html", data)
 
 
 def equipos_bodega(request):
@@ -372,10 +438,15 @@ def tienda(request):
     # ? print(productos_with_usd)
     
 
-    return render(request, 'core/tienda.html', {
-        'productos': productos_with_usd,
-        'exchange_rate': exchange_rate
-    })
+    return render(
+        request,
+        'core/tienda.html',
+        {
+            'productos': productos_with_usd,
+            'exchange_rate': exchange_rate,
+            'active_page': 'tienda'
+        }
+    )
 
 @csrf_exempt
 def registrar_solicitud_servicio(request):
@@ -407,7 +478,11 @@ def registrar_solicitud_servicio(request):
     else:
         form = SolicitudServicio()
 
-    return render(request, 'core/registrar_solicitud_servicio.html', {'form': form})
+    return render(
+        request,
+        'core/registrar_solicitud_servicio.html',
+        {'form': form, 'active_page': 'registrar_solicitud_servicio'}
+    )
 
 @csrf_exempt
 def facturas(request):
@@ -431,18 +506,21 @@ def facturas(request):
             'facturas': facturas,
             'guias_despacho': guias_despacho,
             'tipousu': perfil.tipousu,
+            'active_page': 'facturas'
         }
         return render(request, 'core/facturas.html', context)
 
     except PerfilUsuario.DoesNotExist:
         return render(request, 'core/facturas.html', {
             'error': 'No se encontró el perfil del usuario.',
+            'active_page': 'facturas'
         })
 
     except Exception as e:
         logger.error(f"Error al obtener facturas: {str(e)}")
         return render(request, 'core/facturas.html', {
             'error': 'Ocurrió un error inesperado al obtener las facturas.',
+            'active_page': 'facturas'
         })
 
 
@@ -468,17 +546,25 @@ def mis_compras(request):
         return redirect('home')
     
     facturas = Factura.objects.filter(rutcli=request.user.perfilusuario.rut)
-    return render(request, 'core/facturas.html', {'facturas': facturas})
+    return render(
+    request,
+    'core/facturas.html',
+    {'facturas': facturas, 'active_page': 'facturas'}
+)
 
-@login_required
-def mis_solicitudes(request):
-    if request.user.perfilusuario.tipousu != 'Cliente':
-        return redirect('home')
+# @login_required
+# def mis_solicitudes(request):
+#     if request.user.perfilusuario.tipousu != 'Cliente':
+#         return redirect('home')
     
-    solicitudes = SolicitudServicio.objects.filter(
-        factura__rutcli=request.user.perfilusuario.rut
-    )
-    return render(request, 'core/obtener_solicitudes_de_servicio.html', {'solicitudes': solicitudes})
+#     solicitudes = SolicitudServicio.objects.filter(
+#         factura__rutcli=request.user.perfilusuario.rut
+#     )
+#     return render(
+#     request,
+#     'core/obtener_solicitudes_de_servicio.html',
+#     {'solicitudes': solicitudes, 'active_page': 'obtener_solicitudes'}
+# )
 
 # @login_required
 # def perfil_usuario(request):
@@ -495,79 +581,125 @@ def mis_solicitudes(request):
 def obtener_solicitudes_de_servicio(request):
     if request.user.perfilusuario.tipousu == 'Técnico':
         # Mostrar solo solicitudes asignadas al técnico
-        solicitudes = SolicitudServicio.objects.filter(tecnico=request.user.perfilusuario)
+        solicitudes = SolicitudServicio.objects.filter(ruttec=request.user.perfilusuario)
     elif request.user.perfilusuario.tipousu == 'Administrador':
         # Mostrar todas las solicitudes
         solicitudes = SolicitudServicio.objects.all()
+    elif request.user.perfilusuario.tipousu == 'Cliente':
+        # Mostrar solo las solicitudes del cliente
+        solicitudes = SolicitudServicio.objects.filter(nrofac__rutcli=request.user.perfilusuario.rut)
     else:
         return redirect('home')
     
-    return render(request, 'core/obtener_solicitudes_de_servicio.html', {'solicitudes': solicitudes})
+    lista = []
+    for sol in solicitudes:
+        lista.append({
+            'nrosol': sol.nrosol,
+            'nomcli': f"{sol.nrofac.rutcli.user.first_name} {sol.nrofac.rutcli.user.last_name}",
+            'tiposol': sol.tiposol,
+            'fechavisita': sol.fechavisita,
+            'nomtec': f"{sol.ruttec.user.first_name} {sol.ruttec.user.last_name}",
+            'descser': sol.descsol,  # <--- aquí está el nombre correcto
+            'estadosol': sol.estadosol,
+        })
+    
+    return render(request, 'core/obtener_solicitudes_de_servicio.html',
+    {'lista': lista, 'active_page': 'obtener_solicitudes_de_servicio'}
+)
+@login_required
+def aceptar_solicitud(request, nrosol):
+    solicitud = SolicitudServicio.objects.get(nrosol=nrosol)
+    solicitud.estadosol = 'Aceptado'
+    solicitud.save()
+    return redirect('obtener_solicitudes_de_servicio')
+
+@login_required
+def modificar_solicitud(request, nrosol):
+    solicitud = SolicitudServicio.objects.get(nrosol=nrosol)
+    if request.method == 'POST':
+        nueva_fecha = request.POST.get('fechavisita')
+        if nueva_fecha:
+            solicitud.fechavisita = nueva_fecha
+            solicitud.estadosol = 'Modificado'
+            solicitud.save()
+    return redirect('obtener_solicitudes_de_servicio')
+
+@login_required
+def cerrar_solicitud(request, nrosol):
+    solicitud = SolicitudServicio.objects.get(nrosol=nrosol)
+    solicitud.estadosol = 'Cerrado'
+    solicitud.save()
+    return redirect('obtener_solicitudes_de_servicio')
+
 
 @login_required
 def facturas(request):
-    if request.user.perfilusuario.tipousu == 'Administrador':
-        # Mostrar todas las facturas para el administrador
+    perfil = request.user.perfilusuario
+    if perfil.tipousu == 'Administrador':
         facturas = Factura.objects.all()
+    elif perfil.tipousu == 'Cliente':
+        facturas = Factura.objects.filter(rutcli=perfil.rut)
     else:
         return redirect('home')
     
-    return render(request, 'core/facturas.html', {'facturas': facturas})
+    return render(
+        request,
+        'core/facturas.html',
+        {'facturas': facturas, 'active_page': 'facturas'}
+    )
 
 
 @login_required
-def ingresar_solicitud_servicio(request:HttpRequest):
-    # Get the user's purchased products
-    purchased_products = Factura.objects.filter(rutcli=request.user.perfilusuario.rut).values(
-        'idprod__idprod', 'idprod__nomprod'
-    )
+def ingresar_solicitud_servicio(request):
+    PRECIO_SERVICIO = 25000 
+
     if request.method == 'POST':
-        # Extract form data
-        selected_product_id = request.POST.get('selected_product')
         tipo_solicitud = request.POST.get('tipo_solicitud')
-        descripcion = request.POST.get('descripcion',)
+        descripcion = request.POST.get('descripcion')
         fecha_visita = request.POST.get('fecha_visita')
-        hora_visita = request.POST.get('hora_visita')
-
-        # Validate the selected product
-        if not selected_product_id:
-            return render(request, 'core/ingresar_solicitud_servicio.html', {
-                'error': 'Debe seleccionar un producto para el servicio.',
-                'purchased_products': purchased_products
-            })
-
-        # Get the product price
-        try:
-            producto = Producto.objects.get(idprod=selected_product_id)
-            precio = producto.precio
-        except Producto.DoesNotExist:
-            return render(request, 'core/ingresar_solicitud_servicio.html', {
-                'error': 'El producto seleccionado no existe.',
-                'purchased_products': purchased_products
-            })
-
-        # Call the payment function
-        payment_successful = iniciar_pago(request, id=selected_product_id)
-
-        if payment_successful:  # Proceed only if payment is successful
-            # Call stored procedure to create service request
-            with connection.cursor() as cursor:
-                cursor.execute(
-                    f"EXEC SP_CREAR_SOLICITUD_SERVICIO @precio={precio}, @tipo_solicitud='{tipo_solicitud}', @descripcion='{descripcion}', @fecha_visita='{fecha_visita}', @hora_visita='{hora_visita}', @cliente_id='{request.user.perfilusuario.rut}'"
-                )
-
-            # Call stored procedure to create invoice
-            with connection.cursor() as cursor:
-                cursor.execute(
-                    f"EXEC SP_CREAR_FACTURA @cliente_id='{request.user.perfilusuario.rut}', @monto={precio}"
-                )
-
-            return render(request, 'core/ingresar_solicitud_servicio.html', {'success': True})
-
+        print(f"Tipo de solicitud: {tipo_solicitud}, Descripción: {descripcion}, Fecha: {fecha_visita}")
+        # Guardar datos en sesión para usarlos después del pago
+        tecnico = PerfilUsuario.objects.filter(tipousu='Técnico').first()
+        # perfil_cliente = PerfilUsuario.objects.get(user=user)
+        request.session['servicio_tipo_solicitud'] = tipo_solicitud
+        request.session['servicio_descripcion'] = descripcion
+        request.session['servicio_fecha_visita'] = fecha_visita
+        request.session['servicio_precio'] = PRECIO_SERVICIO
+        if tecnico:
+            request.session['servicio_tecnico_rut'] = tecnico.rut
         else:
-            return render(request, 'core/ingresar_solicitud_servicio.html', {
-                'error': 'El pago no fue exitoso.',
-                'purchased_products': purchased_products
-            })
+            request.session['servicio_tecnico_rut'] = None  # O maneja el caso sin técnico
 
-    return render(request, 'core/ingresar_solicitud_servicio.html', {'purchased_products': purchased_products})
+        # Iniciar pago Webpay
+        buy_order = str(random.randrange(1000000, 99999999))
+        session_id = request.user.username
+        amount = PRECIO_SERVICIO
+        return_url = request.build_absolute_uri('/pago_exitoso/')
+
+        commercecode = "597055555532"
+        apikey = "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C"
+        tx = Transaction(options=WebpayOptions(commerce_code=commercecode, api_key=apikey, integration_type="TEST"))
+        response = tx.create(buy_order, session_id, amount, return_url)
+
+        context = {
+            "buy_order": buy_order,
+            "session_id": session_id,
+            "amount": amount,
+            "return_url": return_url,
+            "response": response,
+            "token_ws": response['token'],
+            "url_tbk": response['url'],
+            "first_name": request.user.first_name,
+            "last_name": request.user.last_name,
+            "email": request.user.email,
+            "rut": request.user.perfilusuario.rut,
+            "dirusu": request.user.perfilusuario.dirusu,
+            "tecnico": tecnico,
+        }
+        return render(request, "core/iniciar_pago.html", context)
+
+    return render(
+    request,
+    'core/ingresar_solicitud_servicio.html',
+    {'precio_servicio': 25000, 'active_page': 'ingresar_solicitud_servicio'}
+)

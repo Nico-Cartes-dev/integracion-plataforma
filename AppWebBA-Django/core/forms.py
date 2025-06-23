@@ -32,11 +32,11 @@ class PerfilUsuarioForm(Form):
     email = forms.CharField(max_length=254, required=True, label="Correo")
     rut = forms.CharField(max_length=20, required=False, label="Rut")
     tipousu = forms.CharField(
-    max_length=50,
-    required=True,
-    label="Tipo de usuario",
-    widget=forms.TextInput(attrs={'readonly': 'readonly','disabled': 'disabled'}))
-    # tipousu = forms.CharField(max_length=50, required=True, label="Tipo de usuario")
+        max_length=50,
+        required=True,
+        label="Tipo de usuario",
+        widget=forms.TextInput(attrs={'readonly': 'readonly'})
+    )
     dirusu = forms.CharField(max_length=300, required=False, label="Dirección")
 
     class Meta:

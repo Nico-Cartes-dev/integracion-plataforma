@@ -1,66 +1,102 @@
-body {
-    margin: 0;
-    padding: 0;
-}
-
-h1 {
-    margin-top: 30px !important;
-    margin-bottom: 40px !important;
-    text-align: center !important;
-    font-size: 50px !important;
-    color: blue !important;
-}
-
-.nav_item_text {
-    font-weight: bold;
-}
-
-.img_menu {
-    height: 32px;
-    padding-right: 5px;
-}
-
+/* === Navbar principal === */
 .navbar {
-    border-bottom: 2px solid #ffffff30;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background-color: #092b57;
+  border-bottom: 2px solid rgba(255,255,255,0.3);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0.5rem 0;
 }
 
-/* Navbar general */
-.navbar {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    z-index: 1030;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-}
-
-/* Estilo base para los enlaces */
+/* Enlaces */
 .navbar .nav-link {
-    color: white;
-    transition: color 0.3s ease-in-out, border-bottom 0.3s ease;
-    font-weight: 500;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
+  color: #fff;
+  font-weight: 500;
+  margin: 0 0.5rem;
+  transition: color 0.3s, border-bottom 0.3s;
 }
 
-/* Al pasar el mouse (hover) */
-.navbar .nav-link:hover {
-    color: #ffc107; /* Amarillo elegante */
-    border-bottom: 2px solid #ffc107;
+/* Hover y activo */
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+  color: #ffc107;
+  border-bottom: 2px solid #ffc107;
 }
 
-/* Logo dentro del navbar */
+/* Brand */
+.navbar-brand {
+  font-weight: bold;
+  color: #fff;
+}
+
 .navbar-brand img {
-    height: 30px;
-    margin-right: 8px;
-    filter: brightness(1.1);
+  height: 30px;
+  margin-right: 8px;
+  filter: brightness(1.1);
 }
 
-/* Botón hamburguesa claro */
+/* Toggler */
 .navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255,255,255,0.7);
 }
 
 .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255,255,255,0.9%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  background-image: 
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 30 30' ...'%2F%3E%3C%2Fsvg%3E");
+}
+
+/* Responsivo: más espacio en pantallas grandes */
+@media (min-width: 992px) {
+  .navbar .nav-item + .nav-item {
+    margin-left: 1rem;
+  }
+}
+
+
+.footer h5 {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.footer p,
+.footer li {
+  color: #e0e0e0;
+}
+
+.footer a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer a:hover {
+  color: #ffc107;
+}
+/* Footer base */
+.footer {
+  background-color: #0b3361;  /* mismo color que el navbar */
+  color: #ececec;
+}
+
+/* Títulos dentro del footer */
+.footer h5 {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Definición lista */
+.footer dl dt {
+  font-weight: 500;
+}
+.footer dl dd {
+  margin-bottom: 0.75rem;
+  margin-left: 0;  /* elimina indent */
+  color: #ddd;
+}
+
+/* El sub-footer oscuro */
+.footer .bg-dark {
+  background-color: #0a2748 !important;
+}
+.footer .bg-dark small {
+  color: #bbb;
 }

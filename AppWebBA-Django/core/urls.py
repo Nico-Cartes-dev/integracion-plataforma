@@ -8,7 +8,8 @@ from .views import (
     home, administrar_productos, tienda, ficha, iniciar_sesion,
     registrar_usuario, cerrar_sesion, perfil_usuario, iniciar_pago,
     pago_exitoso, obtener_solicitudes_de_servicio, mis_compras,
-    mis_solicitudes, facturas, ingresar_solicitud_servicio
+     facturas, ingresar_solicitud_servicio, aceptar_solicitud,
+    modificar_solicitud, cerrar_solicitud
 )
 
 urlpatterns = [
@@ -43,13 +44,17 @@ urlpatterns = [
 
     # Cliente views
     path('mis-compras/', mis_compras, name='mis_compras'),
-    path('mis-solicitudes/', mis_solicitudes, name='mis_solicitudes'),
+#     path('mis-solicitudes/', mis_solicitudes, name='mis_solicitudes'),
     
     # Técnico and Administrador views
     path('solicitudes/', obtener_solicitudes_de_servicio, 
          name='obtener_solicitudes'),  # Short name for template usage
     path('solicitudes-servicio/', obtener_solicitudes_de_servicio, 
          name='obtener_solicitudes_de_servicio'),  # Original name
+
+     path('aceptar_solicitud/<int:nrosol>/', aceptar_solicitud, name='aceptar_solicitud'),
+     path('modificar_solicitud/<int:nrosol>/', modificar_solicitud, name='modificar_solicitud'),
+     path('cerrar_solicitud/<int:nrosol>/', cerrar_solicitud, name='cerrar_solicitud'),
     
     # Administrador views
     path('facturas/', facturas, name='facturas'),  # For admin to see all invoices

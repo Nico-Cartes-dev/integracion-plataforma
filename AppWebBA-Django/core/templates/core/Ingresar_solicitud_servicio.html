@@ -16,13 +16,10 @@
     <form method="POST">
         {% csrf_token %}
         <div class="mb-3">
-            <label for="selected_product" class="form-label">Seleccione un producto</label>
-            <select name="selected_product" id="selected_product" class="form-select" required>
-                <option value="">-- Seleccione un producto --</option>
-                {% for product in purchased_products %}
-                    <option value="{{ product.idprod__idprod }}">{{ product.idprod__nomprod }}</option>
-                {% endfor %}
-            </select>
+            <label class="form-label">Precio del servicio</label>
+            <div>
+                <strong>$25.000</strong>
+            </div>
         </div>
         <div class="mb-3">
             <label for="tipo_solicitud" class="form-label">Tipo de solicitud</label>
@@ -39,10 +36,10 @@
             <label for="fecha_visita" class="form-label">Fecha de la visita</label>
             <input type="date" name="fecha_visita" id="fecha_visita" class="form-control" required>
         </div>
-        <div class="mb-3">
+        {% comment %} <div class="mb-3">
             <label for="hora_visita" class="form-label">Hora de la visita</label>
             <input type="time" name="hora_visita" id="hora_visita" class="form-control" required>
-        </div>
+        </div> {% endcomment %}
         <button type="submit" class="btn btn-primary">Pagar</button>
     </form>
 </div>
