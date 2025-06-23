@@ -18,8 +18,8 @@
     </target>
     <target name="wsimport-client-WsAutenticacion" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/WsAutenticacion"/>
-        <property name="wsdl-WsAutenticacion" location="xml-resources/web-service-references/WsAutenticacion/wsdl/localhost_54096/WsAutenticacion.svc.singlewsdl.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/WsAutenticacion" destdir="${build.generated.dir}/jax-wsCache/WsAutenticacion" wsdl="${wsdl-WsAutenticacion}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:54096/WsAutenticacion.svc?singleWsdl" xnocompile="true" xendorsed="true" package="buenosaires.proxy">
+        <property name="wsdl-WsAutenticacion" location="xml-resources/web-service-references/WsAutenticacion/wsdl/localhost_50397/WsAutenticacion.svc.singlewsdl.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/WsAutenticacion" destdir="${build.generated.dir}/jax-wsCache/WsAutenticacion" wsdl="${wsdl-WsAutenticacion}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:50397/WsAutenticacion.svc?singleWsdl" xnocompile="true" xendorsed="true" package="buenosaires.proxy.auth">
             <depends file="${wsdl-WsAutenticacion}"/>
             <produces dir="${build.generated.dir}/jax-wsCache/WsAutenticacion"/>
         </wsimport>
@@ -31,7 +31,24 @@
     </target>
     <target name="wsimport-client-clean-WsAutenticacion" depends="-init-project">
         <delete dir="${build.generated.dir}/jax-wsCache/WsAutenticacion"/>
-        <delete dir="${build.generated.sources.dir}/jax-ws/buenosaires/proxy"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/buenosaires/proxy/auth"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-WsAutenticacion"/>
+    <target name="wsimport-client-WsStockProducto" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/WsStockProducto"/>
+        <property name="wsdl-WsStockProducto" location="xml-resources/web-service-references/WsStockProducto/wsdl/localhost_50397/WsStockProducto.svc.singlewsdl.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/WsStockProducto" destdir="${build.generated.dir}/jax-wsCache/WsStockProducto" wsdl="${wsdl-WsStockProducto}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:50397/WsStockProducto.svc?singleWsdl" xnocompile="true" xendorsed="true" package="buenosaires.proxy.stock">
+            <depends file="${wsdl-WsStockProducto}"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/WsStockProducto"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/WsStockProducto">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-WsStockProducto" depends="-init-project">
+        <delete dir="${build.generated.dir}/jax-wsCache/WsStockProducto"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/buenosaires/proxy/stock"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-WsAutenticacion, wsimport-client-WsStockProducto"/>
 </project>
