@@ -1,10 +1,10 @@
 package buenosaires.ventaba;
 
-import buenosaires.proxy.ScAutenticacion;
-import javax.swing.JOptionPane;
+import buenosaires.proxy.auth.ScAutenticacion;
+import javax.swing.*;
 
 public class VentanaLogin extends javax.swing.JFrame {
-
+    
     public VentanaLogin() {
         initComponents();
     }
@@ -93,16 +93,33 @@ public class VentanaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        var bc = new ScAutenticacion();
-        bc.autenticar("Vendedor", txtCuenta.getText(), txtPassword.getText());
-        if (bc.isAutenticado()) {
-            JOptionPane.showMessageDialog(null, "AUTENTICADO"
-                , "Buenos Aires", JOptionPane.INFORMATION_MESSAGE);
+        String usuario = txtCuenta.getText().trim();
+        String clave   = new String(txtPassword.getPassword()).trim();
+        // Ojo: aquí puedes parametrizar el tipo en un combo, si no:
+        String tipousu = "Vendedor"; 
+        // si usuario.equalsIgnoreCase("emusk")) tipousu = "Administrador";
+
+        ScAutenticacion sc = new ScAutenticacion();
+        sc.autenticar(tipousu, usuario, clave);
+
+        if (sc.isAutenticado()) {
+            // 1) Cerrar o esconder el login
+            this.dispose();
+            // 2) Abrir la ventana de consulta de bodega
+            SwingUtilities.invokeLater(() -> {
+                new VentanaConsultarBodega()
+                    .setVisible(true);
+            });
+        } else {
+            // Mostrar por qué falló
+            JOptionPane.showMessageDialog(
+                this,
+                sc.getMensaje(),
+                "Error de autenticación",
+                JOptionPane.ERROR_MESSAGE
+            );
         }
-        else {
-            JOptionPane.showMessageDialog(null, bc.getMensaje()
-                , "Buenos Aires", JOptionPane.INFORMATION_MESSAGE);
-        }
+
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**

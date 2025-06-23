@@ -3,9 +3,9 @@
   <services/>
   <clients>
     <client name="WsAutenticacion">
-      <wsdl-url>http://localhost:54096/WsAutenticacion.svc?singleWsdl</wsdl-url>
-      <local-wsdl-file>localhost_54096/WsAutenticacion.svc.singlewsdl.wsdl</local-wsdl-file>
-      <package-name forceReplace="true">buenosaires.proxy</package-name>
+      <wsdl-url>http://localhost:50397/WsAutenticacion.svc?singleWsdl</wsdl-url>
+      <local-wsdl-file>localhost_50397/WsAutenticacion.svc.singlewsdl.wsdl</local-wsdl-file>
+      <package-name forceReplace="true">buenosaires.proxy.auth</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
         <wsimport-option>
@@ -22,7 +22,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://localhost:54096/WsAutenticacion.svc?singleWsdl</wsimport-option-value>
+          <wsimport-option-value>http://localhost:50397/WsAutenticacion.svc?singleWsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>
@@ -34,7 +34,43 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>package</wsimport-option-name>
-          <wsimport-option-value>buenosaires.proxy</wsimport-option-value>
+          <wsimport-option-value>buenosaires.proxy.auth</wsimport-option-value>
+        </wsimport-option>
+      </wsimport-options>
+    </client>
+    <client name="WsStockProducto">
+      <wsdl-url>http://localhost:50397/WsStockProducto.svc?singleWsdl</wsdl-url>
+      <local-wsdl-file>localhost_50397/WsStockProducto.svc.singlewsdl.wsdl</local-wsdl-file>
+      <package-name forceReplace="true">buenosaires.proxy.stock</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+      <wsimport-options>
+        <wsimport-option>
+          <wsimport-option-name>extension</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>verbose</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>fork</wsimport-option-name>
+          <wsimport-option-value>false</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>wsdlLocation</wsimport-option-name>
+          <wsimport-option-value>http://localhost:50397/WsStockProducto.svc?singleWsdl</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xnocompile</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xendorsed</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>package</wsimport-option-name>
+          <wsimport-option-value>buenosaires.proxy.stock</wsimport-option-value>
         </wsimport-option>
       </wsimport-options>
     </client>
