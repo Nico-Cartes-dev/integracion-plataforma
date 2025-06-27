@@ -7,7 +7,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     SELECT
-		s.idstock, p.idprod, p.nomprod, f.nrofac, 
+		s.idstock, p.idprod, p.nomprod, f.nrofac,s.cantidad, 
 		CASE 
 			WHEN f.nrofac IS NOT NULL 
 			THEN 'Vendido'
@@ -258,6 +258,11 @@ def exec_sql(query):
         cursor.execute(query)
 
 def run():
+    # Asegura que la columna cantidad existe en StockProducto
+    try:
+        exec_sql("ALTER TABLE dbo.StockProducto ADD cantidad INT NOT NULL DEFAULT 1;")
+    except:
+        pass  # Si ya existe, ignora el error
 
     # Poblar tabla Producto
 
@@ -317,16 +322,16 @@ def run():
 
     # Poblar tabla StockProducto
 
-    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac) VALUES (11111, 1, 1);")
-    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac) VALUES (22222, 2, 2);")
-    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac) VALUES (88888, 3, 8);")
-    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac) VALUES (90001, 1, null);")
-    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac) VALUES (90002, 3, null);")
-    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac) VALUES (90003, 4, null);")
-    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac) VALUES (90004, 6, null);")
-    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac) VALUES (90005, 1, null);")
-    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac) VALUES (90006, 3, null);")
-    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac) VALUES (90007, 4, null);")
+    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac, cantidad) VALUES (11111, 1, 1, 1);")
+    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac, cantidad) VALUES (22222, 2, 2, 1);")
+    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac, cantidad) VALUES (88888, 3, 8, 1);")
+    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac, cantidad) VALUES (90001, 1, null, 1);")
+    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac, cantidad) VALUES (90002, 3, null, 1);")
+    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac, cantidad) VALUES (90003, 4, null, 1);")
+    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac, cantidad) VALUES (90004, 6, null, 1);")
+    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac, cantidad) VALUES (90005, 1, null, 1);")
+    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac, cantidad) VALUES (90006, 3, null, 1);")
+    exec_sql("INSERT INTO dbo.StockProducto (idstock, idprod, nrofac, cantidad) VALUES (90007, 4, null, 1);")
 
     # Poblar tabla AnwoStockProducto
 

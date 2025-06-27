@@ -16,6 +16,7 @@ def get_exchange_clp_usd():
         # SOAP client for Banco Central de Chile
         wsdl_url = "https://si3.bcentral.cl/SieteWS/SieteWS.asmx?WSDL"
         client = Client(wsdl_url)
+        # arreglar esta parte del code 
         series_id = "F073.TCO.PRE.Z.D"  # Dólar observado
         date = datetime.now().strftime("%Y-%m-%d")
 

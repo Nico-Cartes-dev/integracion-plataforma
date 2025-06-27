@@ -35,8 +35,8 @@ def obtener_equipos_en_bodega (request):
         for row in resultados:
             idstock = row[0]
             nomprod = row[2]
-            cantidad = row[3]
-            estado = row[4]
+            cantidad = row[4]
+            estado = row[5]
             data.append({
                 'idstock': idstock,
                 'nomprod': nomprod,

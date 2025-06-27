@@ -1,5 +1,6 @@
 package buenosaires.proxy.rest;
 
+import buenosaires.model.FilaStockProducto;
 import buenosaires.model.StockProducto;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -13,7 +14,7 @@ import java.util.List;
 public class ScStockProductoRest {
     private static final String ENDPOINT = "http://127.0.0.1:8001/BuenosAiresApiRest/obtener_equipos_en_bodega";
 
-    public List<StockProducto> listar() throws Exception {
+    public List<FilaStockProducto> listar() throws Exception {
         URL url = new URL(ENDPOINT);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -34,7 +35,7 @@ public class ScStockProductoRest {
         conn.disconnect();
 
         String json = sb.toString();
-        Type listType = new TypeToken<List<StockProducto>>() {}.getType();
+        Type listType = new TypeToken<List<FilaStockProducto>>() {}.getType();
         return new Gson().fromJson(json, listType);
     }
 }

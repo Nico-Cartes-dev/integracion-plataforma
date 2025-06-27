@@ -9,7 +9,7 @@ public class Producto {
     private String nomprod;
     private String descprod;
     private int precio;
-    private String imagen;
+
 
     public int getIdprod() {
         return idprod;
@@ -47,12 +47,5 @@ public class Producto {
         this.precio = precio;
     }
 
-    public String getImagen() {
-        return imagen;
-    }
 
-    @XmlElement(name = "imagen")
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
 }

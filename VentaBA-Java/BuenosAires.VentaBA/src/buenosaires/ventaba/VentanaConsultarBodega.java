@@ -1,5 +1,6 @@
 package buenosaires.ventaba;
 
+import buenosaires.model.FilaStockProducto;
 import buenosaires.model.StockProducto;
 import buenosaires.proxy.rest.ScStockProductoRest;
 import javax.swing.*;
@@ -17,7 +18,7 @@ public class VentanaConsultarBodega extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        String[] columnas = {"ID", "Nombre", "Descripción", "Precio", "Imagen"};
+        String[] columnas = {"idstock", "nomprod", "cantidad", "estado"};
         modelo = new DefaultTableModel(columnas, 0);
         tabla = new JTable(modelo);
         add(new JScrollPane(tabla), BorderLayout.CENTER);
@@ -28,14 +29,13 @@ public class VentanaConsultarBodega extends javax.swing.JFrame {
     private void cargarDatosDesdeWebService() {
          try {
             ScStockProductoRest proxy = new ScStockProductoRest();
-            List<StockProducto> productos = proxy.listar();
-            for (StockProducto p : productos) {
+            List<FilaStockProducto> productos = proxy.listar();
+            for (FilaStockProducto p : productos) {
                 modelo.addRow(new Object[]{
-                    p.getIdprod(),
+                    p.getIdstock(),
                     p.getNomprod(),
-                    p.getDescprod(),
-                    p.getPrecio(),
-                    p.getImagen()
+                    p.getCantidad(),
+                    p.getEstado()
                 });
             }
         } catch (Exception ex) {

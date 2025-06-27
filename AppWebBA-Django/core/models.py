@@ -109,6 +109,7 @@ class StockProducto(models.Model):
     idstock = models.IntegerField(primary_key=True)
     idprod = models.ForeignKey(Producto, models.DO_NOTHING, db_column='idprod', null=False, blank=False)
     nrofac = models.ForeignKey(Factura, models.DO_NOTHING, db_column='nrofac', blank=True, null=True)
+    cantidad = models.IntegerField(null=False, blank=False, default=1)
 
     class Meta:
         db_table = 'StockProducto'
