@@ -1,6 +1,6 @@
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
-from django.http import HttpRequest
+from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -703,3 +703,4 @@ def ingresar_solicitud_servicio(request):
     'core/ingresar_solicitud_servicio.html',
     {'precio_servicio': 25000, 'active_page': 'ingresar_solicitud_servicio'}
 )
+    

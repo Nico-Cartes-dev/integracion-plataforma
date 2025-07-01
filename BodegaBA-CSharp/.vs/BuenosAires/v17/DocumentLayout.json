@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}|BuenosAires.ServiceLayer\\BuenosAires.ServiceLayer.csproj|F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\buenosaires.servicelayer\\wsstockproducto.svc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}|BuenosAires.ServiceLayer\\BuenosAires.ServiceLayer.csproj|solutionrelative:buenosaires.servicelayer\\wsstockproducto.svc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F45051A2-3661-44A1-A563-B6C94ABF25D5}|BuenosAires.BodegaBA\\BuenosAires.BodegaBA.csproj|f:\\int_plataforma\\integracion-plataforma\\bodegaba-csharp\\buenosaires.bodegaba\\consultarbodega.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F45051A2-3661-44A1-A563-B6C94ABF25D5}|BuenosAires.BodegaBA\\BuenosAires.BodegaBA.csproj|solutionrelative:buenosaires.bodegaba\\consultarbodega.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F45051A2-3661-44A1-A563-B6C94ABF25D5}|BuenosAires.BodegaBA\\BuenosAires.BodegaBA.csproj|F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\buenosaires.bodegaba\\consultarbodega.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{F45051A2-3661-44A1-A563-B6C94ABF25D5}|BuenosAires.BodegaBA\\BuenosAires.BodegaBA.csproj|solutionrelative:buenosaires.bodegaba\\consultarbodega.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}|BuenosAires.ServiceLayer\\BuenosAires.ServiceLayer.csproj|F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\buenosaires.servicelayer\\wsstockproducto.svc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2C8EAEF-EDD7-46FB-99D5-7485F1923BEE}|BuenosAires.ServiceLayer\\BuenosAires.ServiceLayer.csproj|solutionrelative:buenosaires.servicelayer\\wsstockproducto.svc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F45051A2-3661-44A1-A563-B6C94ABF25D5}|BuenosAires.BodegaBA\\BuenosAires.BodegaBA.csproj|F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\buenosaires.bodegaba\\ventanareservaranwo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -62,7 +62,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 13,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,7 +74,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "ConsultarBodega.cs",
               "DocumentMoniker": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.BodegaBA\\ConsultarBodega.cs",
               "RelativeDocumentMoniker": "BuenosAires.BodegaBA\\ConsultarBodega.cs",
@@ -87,7 +87,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ConsultarBodega.cs [Design]",
               "DocumentMoniker": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.BodegaBA\\ConsultarBodega.cs",
               "RelativeDocumentMoniker": "BuenosAires.BodegaBA\\ConsultarBodega.cs",
@@ -207,15 +207,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "WsStockProducto.svc.cs",
               "DocumentMoniker": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.ServiceLayer\\WsStockProducto.svc.cs",
               "RelativeDocumentMoniker": "BuenosAires.ServiceLayer\\WsStockProducto.svc.cs",
               "ToolTip": "F:\\int_plataforma\\integracion-plataforma\\BodegaBA-CSharp\\BuenosAires.ServiceLayer\\WsStockProducto.svc.cs",
               "RelativeToolTip": "BuenosAires.ServiceLayer\\WsStockProducto.svc.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAwwBYAAABAAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAcwBYAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-19T01:55:56.925Z"
+              "WhenOpened": "2025-06-19T01:55:56.925Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",

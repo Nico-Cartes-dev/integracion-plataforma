@@ -4,7 +4,9 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from core.models import PerfilUsuario
 from django.db import connection
+import threading
 
+semaforo = threading.Semaphore(10)
 @csrf_exempt
 @api_view(['GET'])
 def autenticar(request, tipousu, username, password):
@@ -14,43 +16,41 @@ def autenticar(request, tipousu, username, password):
         nombre = f'{user.first_name} {user.last_name}'
         tipo = perfil.tipousu
         if tipo in [tipousu, 'Administrador']:
-            return JsonResponse({'Autenticado': True, 'NombreUsuario': nombre, 'TipoUsuario': tipo, 'Mensaje': ''})
-        msg = f'La cuenta de usuario {nombre} es del perfil {tipo}, por lo que no puede ingresar al sistema'
-    else:
-        nombre, tipo, msg = '', '', 'La cuenta o la contraseña no coinciden con un usuario válido'
-    return JsonResponse({'Autenticado': False, 'NombreUsuario': nombre, 'TipoUsuario': tipo, 'Mensaje': msg})
+            return JsonResponse({'Autenticado': True, 'NombreUsuario': nombre, 'TipoUsuario': tipo, 'Mensaje': ''}, status=200)
+        return JsonResponse({'Autenticado': False, 'NombreUsuario': nombre, 'TipoUsuario': tipo, 'Mensaje': 'Rol no autorizado'}, status=403)
+    return JsonResponse({'Autenticado': False, 'NombreUsuario': '', 'TipoUsuario': '', 'Mensaje': 'Credenciales inválidas'}, status=401)
 
-def obtener_equipos_en_bodega (request):
-    if request.method == 'GET':
-        cursor = connection.cursor()
-
-        #proceso almacenado
-        cursor.execute("exec sp_obtener_equipos_en_bodega")
-
-        #convertir los resultados 
-        resultados = cursor.fetchall()
-
-        #convertir los resultados a una lista de diccionarios
-        data = []
-        for row in resultados:
-            idstock = row[0]
-            nomprod = row[2]
-            cantidad = row[4]
-            estado = row[5]
-            data.append({
-                'idstock': idstock,
-                'nomprod': nomprod,
-                'cantidad': cantidad,
-                'estado': estado
-            })
-        return JsonResponse(data, safe=False)
 @csrf_exempt
-@api_view(['GET'])
+def obtener_equipos_en_bodega(request):
+    if request.method == 'GET':
+        acquired = semaforo.acquire(timeout=10)  # Espera hasta 10 segundos
+        if not acquired:
+            return JsonResponse({'error': 'Servidor ocupado, intenta de nuevo en unos segundos.'}, status=503)
+        try:
+            cursor = connection.cursor()
+            cursor.execute("exec sp_obtener_equipos_en_bodega")
+            resultados = cursor.fetchall()
+            data = []
+            for row in resultados:
+                idstock = row[0]
+                nomprod = row[2]
+                cantidad = row[4]
+                estado = row[5]
+                data.append({
+                    'idstock': idstock,
+                    'nomprod': nomprod,
+                    'cantidad': cantidad,
+                    'estado': estado
+                })
+            return JsonResponse(data, safe=False)
+        finally:
+            semaforo.release()
 
+@api_view(['GET'])
 def obtener_productos(request):
     try:
         with connection.cursor() as cursor:
-            cursor.callproc('SP_OBTENER_PRODUCTOS')
+            cursor.execute("EXEC SP_OBTENER_PRODUCTOS")
             productos = cursor.fetchall()
             columns = [col[0] for col in cursor.description]
             productos_list = [
