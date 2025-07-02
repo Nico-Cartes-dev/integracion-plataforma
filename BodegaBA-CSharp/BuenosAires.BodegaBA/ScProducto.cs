@@ -1,58 +1,58 @@
-﻿using System.Collections.Generic;
-using BuenosAires.Model.Utiles;
-using BuenosAires.Model;
-using System;
-using BuenosAires.BodegaBA.WsProductoReference;
+﻿//using system.collections.generic;
+//using buenosaires.model.utiles;
+//using buenosaires.model;
+//using system;
+////using buenosaires.bodegaba.wsproductoreference;
 
-namespace BuenosAires.ServiceProxy
-{
-    public class ScProducto
-    {
-        public string Accion = "";
-        public string Mensaje = "";
-        public bool HayErrores = false;
-        public Producto Producto = null;
-        public List<Producto> Lista = null;
+//namespace buenosaires.serviceproxy
+//{
+//    public class scproducto
+//    {
+//        public string accion = "";
+//        public string mensaje = "";
+//        public bool hayerrores = false;
+//        public producto producto = null;
+//        public list<producto> lista = null;
 
-        public void CopiarPropiedades(Respuesta resp)
-        {
-            this.Accion = resp.Accion;
-            this.Mensaje = resp.Mensaje;
-            this.HayErrores = resp.HayErrores;
-            this.Producto = Util.DeserializarXML<Producto>(resp.XmlProducto);
-            this.Lista = Util.DeserializarXML<List<Producto>>(resp.XmlListaProducto);
-        }
+//        public void copiarpropiedades(respuesta resp)
+//        {
+//            this.accion = resp.accion;
+//            this.mensaje = resp.mensaje;
+//            this.hayerrores = resp.hayerrores;
+//            this.producto = util.deserializarxml<producto>(resp.xmlproducto);
+//            this.lista = util.deserializarxml<list<producto>>(resp.xmllistaproducto);
+//        }
 
-        public WsProductoClient getWs()
-        {
-            var ws = new WsProductoClient();
-            ws.InnerChannel.OperationTimeout = new TimeSpan(1, 0, 0);
-            return ws;
-        }
+//        public wsproductoclient getws()
+//        {
+//            var ws = new wsproductoclient();
+//            ws.innerchannel.operationtimeout = new timespan(1, 0, 0);
+//            return ws;
+//        }
 
-        public void Crear(Producto producto)
-        {
-            CopiarPropiedades(getWs().Crear(producto));
-        }
+//        public void crear(producto producto)
+//        {
+//            copiarpropiedades(getws().crear(producto));
+//        }
 
-        public void LeerTodos()
-        {
-            CopiarPropiedades(getWs().LeerTodos());
-        }
+//        public void leertodos()
+//        {
+//            copiarpropiedades(getws().leertodos());
+//        }
 
-        public void Leer(int id)
-        {
-            CopiarPropiedades(getWs().Leer(id));
-        }
+//        public void leer(int id)
+//        {
+//            copiarpropiedades(getws().leer(id));
+//        }
 
-        public void Actualizar(Producto producto)
-        {
-            CopiarPropiedades(getWs().Actualizar(producto));
-        }
+//        public void actualizar(producto producto)
+//        {
+//            copiarpropiedades(getws().actualizar(producto));
+//        }
 
-        public void Eliminar(int id)
-        {
-            CopiarPropiedades(getWs().Eliminar(id));
-        }
-    }
-}
+//        public void eliminar(int id)
+//        {
+//            copiarpropiedades(getws().eliminar(id));
+//        }
+//    }
+//}

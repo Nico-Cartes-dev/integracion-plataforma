@@ -67,6 +67,7 @@ namespace BuenosAires.ServiceLayer
                 using (HttpClient client = new HttpClient())
                 {
                     var json = $"{{ \"nroserieanwo\": \"{nroserieanwo}\", \"reservado\": \"{charReservado}\" }}";
+                    //var json = $"{{ \"nroserieanwo\": \"{nroserieanwo}\", \"reservado\": \"{charReservado}\" }}";
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
                     HttpResponseMessage response = client.PostAsync(apiUrl, content).Result;
                     if (response.IsSuccessStatusCode)

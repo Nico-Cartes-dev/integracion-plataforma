@@ -76,11 +76,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Connected Services\WsProductoReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Connected Services\WsStockproductoreference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -201,19 +196,6 @@
     <None Include="Connected Services\WsGuiaDespacho\WsGuiaDespacho2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WsProductoReference\WsProducto.wsdl" />
-    <None Include="Connected Services\WsProductoReference\WsProducto.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\WsProductoReference\WsProducto1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\WsProductoReference\WsProducto2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\WsProductoReference\WsProducto3.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Connected Services\WsStockproductoreference\WsStockProducto.wsdl" />
     <None Include="Connected Services\WsStockproductoreference\WsStockProducto.xsd">
       <SubType>Designer</SubType>
@@ -253,7 +235,6 @@
     <WCFMetadataStorage Include="Connected Services\WsAnwoReference\" />
     <WCFMetadataStorage Include="Connected Services\WsAutenticacionReference\" />
     <WCFMetadataStorage Include="Connected Services\WsGuiaDespacho\" />
-    <WCFMetadataStorage Include="Connected Services\WsProductoReference\" />
     <WCFMetadataStorage Include="Connected Services\WsStockproductoreference\" />
   </ItemGroup>
   <ItemGroup>
@@ -267,21 +248,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\WsAutenticacionReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\WsProductoReference\WsProducto.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\WsProductoReference\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\WsProductoReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\WsProductoReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

@@ -18,5 +18,6 @@ namespace BuenosAires.ServiceLayer
 
         [OperationContract]
         Respuesta reservar_equipo_anwo(string nroserieanwo, char charReservado);
+        //Respuesta reservar_equipo_anwo(string nroserieanwo, string charReservado);
     }
 }
