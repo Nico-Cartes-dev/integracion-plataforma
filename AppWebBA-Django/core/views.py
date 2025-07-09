@@ -1,3 +1,4 @@
+# type: ignore
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.http import HttpRequest, JsonResponse
@@ -16,15 +17,27 @@ import requests
 from .utils import get_exchange_clp_usd
 import logging
 
+def get_user_cookies(request):
+    """
+    Función auxiliar para obtener información de las cookies del usuario
+    """
+    return {
+        'remembered_username': request.COOKIES.get('remembered_username', ''),
+        'user_type': request.COOKIES.get('user_type', ''),
+        'last_login': request.COOKIES.get('last_login', ''),
+        'user_full_name': request.COOKIES.get('user_full_name', '')
+    }
+
 def home(request):
     return render(request, "core/home.html")
 
+@csrf_exempt
 def iniciar_sesion(request):
     data = {"mesg": "", "form": IniciarSesionForm()}
 
     if request.method == "POST":
         form = IniciarSesionForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             username = request.POST.get("username")
             password = request.POST.get("password")
             user = authenticate(username=username, password=password)
@@ -34,18 +47,81 @@ def iniciar_sesion(request):
                     login(request, user)
                     tipousu = PerfilUsuario.objects.get(user=user).tipousu
                     if tipousu != 'Bodeguero':
-                        return redirect(home)
+                        # Crear respuesta con redirect
+                        response = redirect(home)
+                        
+                        # Guardar información en cookies
+                        from datetime import datetime, timedelta
+                        
+                        # Cookie para recordar el username (30 días)
+                        response.set_cookie(
+                            'remembered_username', 
+                            username, 
+                            max_age=30*24*60*60,  # 30 días en segundos
+                            httponly=True,  # Protege contra XSS
+                            samesite='Lax'  # Protege contra CSRF
+                        )
+                        
+                        # Cookie para el tipo de usuario
+                        response.set_cookie(
+                            'user_type', 
+                            tipousu, 
+                            max_age=30*24*60*60,
+                            httponly=True,
+                            samesite='Lax'
+                        )
+                        
+                        # Cookie para la última fecha de login
+                        response.set_cookie(
+                            'last_login', 
+                            datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 
+                            max_age=30*24*60*60,
+                            httponly=True,
+                            samesite='Lax'
+                        )
+                        
+                        # Cookie para el nombre completo del usuario
+                        full_name = f"{user.first_name} {user.last_name}".strip()
+                        if full_name:
+                            response.set_cookie(
+                                'user_full_name', 
+                                full_name, 
+                                max_age=30*24*60*60,
+                                httponly=True,
+                                samesite='Lax'
+                            )
+                        
+                        return response
                     else:
                         data["mesg"] = "¡La cuenta o la password no son correctos!"    
                 else:
                     data["mesg"] = "¡La cuenta o la password no son correctos!"
             else:
                 data["mesg"] = "¡La cuenta o la password no son correctos!"
+    else:
+        # Si es GET, verificar si hay cookies para autocompletar
+        remembered_username = request.COOKIES.get('remembered_username', '')
+        if remembered_username:
+            data["form"] = IniciarSesionForm(initial={'username': remembered_username})
+    
     return render(request, "core/iniciar_sesion.html", data)
 
 def cerrar_sesion(request):
     logout(request)
-    return redirect(home)
+    response = redirect(home)
+    
+    # Eliminar todas las cookies relacionadas con la sesión
+    cookies_to_delete = [
+        'remembered_username',
+        'user_type', 
+        'last_login',
+        'user_full_name'
+    ]
+    
+    for cookie_name in cookies_to_delete:
+        response.delete_cookie(cookie_name)
+    
+    return response
 
 def tienda(request):
     data = {

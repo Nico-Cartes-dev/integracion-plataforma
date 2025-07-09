@@ -160,3 +160,4 @@ F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\ob
 F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Debug\BuenosAi.DA76D1E8.Up2Date
 F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Debug\BuenosAires.BodegaBA.exe
 F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Debug\BuenosAires.BodegaBA.pdb
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Debug\BuenosAires.BodegaBA.exe.config
