@@ -1,0 +1,12 @@
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Release\BuenosAires.BodegaBA.csproj.AssemblyReference.cache
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Release\BuenosAires.BodegaBA.ConsultarBodega.resources
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Release\BuenosAires.BodegaBA.ReservarAnwo.resources
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Release\BuenosAires.BodegaBA.VentanaBuscarID.resources
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Release\BuenosAires.BodegaBA.VentanaGuiasDespacho.resources
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Release\BuenosAires.BodegaBA.VentanaLogin.resources
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Release\BuenosAires.BodegaBA.VentanaPrincipal.resources
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Release\BuenosAires.BodegaBA.VentanaProducto.resources
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Release\BuenosAires.BodegaBA.Properties.Resources.resources
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Release\BuenosAires.BodegaBA.VentanaReservarAnwo.resources
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Release\BuenosAires.BodegaBA.csproj.GenerateResource.cache
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.BodegaBA\obj\Release\BuenosAires.BodegaBA.csproj.CoreCompileInputs.cache

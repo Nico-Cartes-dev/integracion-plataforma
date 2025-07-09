@@ -1,0 +1,12 @@
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.Model\bin\Release\BuenosAires.Model.dll.config
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.Model\bin\Release\BuenosAires.Model.dll
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.Model\bin\Release\BuenosAires.Model.pdb
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.Model\bin\Release\EntityFramework.dll
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.Model\bin\Release\EntityFramework.SqlServer.dll
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.Model\bin\Release\EntityFramework.xml
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.Model\bin\Release\EntityFramework.SqlServer.xml
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.Model\obj\Release\BuenosAires.Model.csproj.AssemblyReference.cache
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.Model\obj\Release\BuenosAires.Model.csproj.CoreCompileInputs.cache
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.Model\obj\Release\BuenosAi.DD85F527.Up2Date
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.Model\obj\Release\BuenosAires.Model.dll
+F:\int_plataforma\integracion-plataforma\BodegaBA-CSharp\BuenosAires.Model\obj\Release\BuenosAires.Model.pdb
