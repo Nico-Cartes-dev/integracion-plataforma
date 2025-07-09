@@ -80,6 +80,7 @@ class SolicitudServicio(models.Model):
     ruttec = models.ForeignKey(PerfilUsuario, models.DO_NOTHING, db_column='ruttec', null=True, blank=True)
     descsol = models.CharField(max_length=200, null=False, blank=False)
     estadosol = models.CharField(choices=ESTADOSOL_CHOICES, max_length=50, null=False, blank=False)
+    guia = models.ForeignKey('GuiaDespacho', models.DO_NOTHING, db_column='nrogd', null=True, blank=True)
 
     class Meta:
         db_table = 'SolicitudServicio'

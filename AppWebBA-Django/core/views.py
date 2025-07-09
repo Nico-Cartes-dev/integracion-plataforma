@@ -95,9 +95,11 @@ def guardar_compra_en_bd(producto_id, perfil_cliente, precio=None):
                 fechavisita=fecha_visita,
                 ruttec=tecnico,
                 descsol=descripcion,
-                estadosol='Pendiente'
+                estadosol='Pendiente',
+                guia=guia_despacho  # Vincular a la guía de despacho
             )
-            logger.info(f"Solicitud de servicio automática creada: {solicitud.nrosol} - Tipo: {tipo_servicio}")
+            print(solicitud)
+            logger.info(f"Solicitud de servicio automática creada: {solicitud.nrosol} - Tipo: {tipo_servicio} - Vinculada a guía: {guia_despacho.nrogd}")
             solicitud_creada = True
         else:
             logger.warning("No se encontró técnico disponible para crear solicitud de servicio")
@@ -462,9 +464,10 @@ def pago_exitoso(request):
                             fechavisita=fecha_visita,
                             ruttec=tecnico,
                             descsol=f'Instalación automática de {producto.nomprod}',
-                            estadosol='Pendiente'
+                            estadosol='Pendiente',
+                            guia=guia_despacho  # Vincular a la guía de despacho
                         )
-                        logger.info(f"Solicitud de servicio automática creada con ID: {solicitud.nrosol}")
+                        logger.info(f"Solicitud de servicio automática creada con ID: {solicitud.nrosol} - Vinculada a guía: {guia_despacho.nrogd}")
                 
                 # Limpiar datos de sesión de compra
                 for key in ['compra_producto_id', 'compra_producto_nombre', 'compra_producto_precio', 'compra_buy_order']:
@@ -949,7 +952,8 @@ def obtener_solicitudes_de_servicio(request):
             'nomcli': f"{sol.nrofac.rutcli.user.first_name} {sol.nrofac.rutcli.user.last_name}",
             'tiposol': sol.tiposol,
             'fechavisita': sol.fechavisita,
-            'nomtec': f"{sol.ruttec.user.first_name} {sol.ruttec.user.last_name}",
+            'nomtec': f"{sol.ruttec.user.first_name} {sol.ruttec.user.last_name}" if sol.ruttec else 'Sin asignar',
+            'ruttec': sol.ruttec.rut if sol.ruttec else None,
             'descser': sol.descsol,  # <--- aquí está el nombre correcto
             'estadosol': sol.estadosol,
         })
@@ -967,12 +971,28 @@ def aceptar_solicitud(request, nrosol):
 @login_required
 def modificar_solicitud(request, nrosol):
     solicitud = SolicitudServicio.objects.get(nrosol=nrosol)
+    user_perfil = request.user.perfilusuario
+
     if request.method == 'POST':
+        accion = request.POST.get('accion')
         nueva_fecha = request.POST.get('fechavisita')
+
+        # Modificar fecha (opcional)
         if nueva_fecha:
             solicitud.fechavisita = nueva_fecha
-            solicitud.estadosol = 'Modificado'
-            solicitud.save()
+            solicitud.estadosol = 'Modificada'
+
+        # Aceptar solicitud
+        if accion == 'aceptar' and solicitud.ruttec is None and user_perfil.tipousu == 'Técnico':
+            solicitud.ruttec = user_perfil
+            solicitud.estadosol = 'Aceptada'
+
+        # Soltar solicitud
+        elif accion == 'soltar' and solicitud.ruttec == user_perfil and user_perfil.tipousu == 'Técnico':
+            solicitud.ruttec = None
+            solicitud.estadosol = 'Pendiente'
+
+        solicitud.save()
     return redirect('obtener_solicitudes_de_servicio')
 
 @login_required
